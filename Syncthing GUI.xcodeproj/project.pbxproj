@@ -12,6 +12,8 @@
 		289601151B04F4B100F7B8C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 289601141B04F4B100F7B8C0 /* Images.xcassets */; };
 		289601181B04F4B100F7B8C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 289601161B04F4B100F7B8C0 /* Main.storyboard */; };
 		289601241B04F4B100F7B8C0 /* Syncthing_GUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601231B04F4B100F7B8C0 /* Syncthing_GUITests.swift */; };
+		2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2896012D1B04F64200F7B8C0 /* RestApi.swift */; };
+		E3EEDE418256028A30F62D7E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BEC06D14A93E840BACE34 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,11 @@
 		2896011D1B04F4B100F7B8C0 /* Syncthing GUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syncthing GUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		289601221B04F4B100F7B8C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		289601231B04F4B100F7B8C0 /* Syncthing_GUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syncthing_GUITests.swift; sourceTree = "<group>"; };
+		2896012D1B04F64200F7B8C0 /* RestApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestApi.swift; path = ../RestApi.swift; sourceTree = "<group>"; };
+		289601451B0512CF00F7B8C0 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Downloads/SwiftyJSON-master/build/Debug/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		50BE4DB0317C33951683760B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		85AD70C55ED11C1E9CA202C8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E03BEC06D14A93E840BACE34 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3EEDE418256028A30F62D7E /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +68,8 @@
 				2896010D1B04F4B100F7B8C0 /* Syncthing GUI */,
 				289601201B04F4B100F7B8C0 /* Syncthing GUITests */,
 				2896010C1B04F4B100F7B8C0 /* Products */,
+				6CEF6B541EC2DD74CC6326CF /* Pods */,
+				2CAD2DFB68A1CC25C2E8E8A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +85,7 @@
 		2896010D1B04F4B100F7B8C0 /* Syncthing GUI */ = {
 			isa = PBXGroup;
 			children = (
+				2896012D1B04F64200F7B8C0 /* RestApi.swift */,
 				289601101B04F4B100F7B8C0 /* AppDelegate.swift */,
 				289601121B04F4B100F7B8C0 /* ViewController.swift */,
 				289601141B04F4B100F7B8C0 /* Images.xcassets */,
@@ -109,6 +120,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		2CAD2DFB68A1CC25C2E8E8A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				289601451B0512CF00F7B8C0 /* SwiftyJSON.framework */,
+				E03BEC06D14A93E840BACE34 /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6CEF6B541EC2DD74CC6326CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				50BE4DB0317C33951683760B /* Pods.debug.xcconfig */,
+				85AD70C55ED11C1E9CA202C8 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,9 +145,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 289601271B04F4B100F7B8C0 /* Build configuration list for PBXNativeTarget "Syncthing GUI" */;
 			buildPhases = (
+				E914B2E34FE610BB96B8DB59 /* Check Pods Manifest.lock */,
 				289601071B04F4B100F7B8C0 /* Sources */,
 				289601081B04F4B100F7B8C0 /* Frameworks */,
 				289601091B04F4B100F7B8C0 /* Resources */,
+				3550A40C0B4D6B7A069C8AEC /* Embed Pods Frameworks */,
+				270F844FC327EF9C22141697 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,6 +235,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		270F844FC327EF9C22141697 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3550A40C0B4D6B7A069C8AEC /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E914B2E34FE610BB96B8DB59 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		289601071B04F4B100F7B8C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -210,6 +290,7 @@
 			files = (
 				289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */,
 				289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */,
+				2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,9 +406,14 @@
 		};
 		289601281B04F4B100F7B8C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50BE4DB0317C33951683760B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/alexandrejouandin/Downloads/SwiftyJSON-master/build/Debug",
+				);
 				INFOPLIST_FILE = "Syncthing GUI/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -336,9 +422,14 @@
 		};
 		289601291B04F4B100F7B8C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85AD70C55ED11C1E9CA202C8 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/alexandrejouandin/Downloads/SwiftyJSON-master/build/Debug",
+				);
 				INFOPLIST_FILE = "Syncthing GUI/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -400,6 +491,7 @@
 				289601291B04F4B100F7B8C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2896012A1B04F4B100F7B8C0 /* Build configuration list for PBXNativeTarget "Syncthing GUITests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +500,7 @@
 				2896012C1B04F4B100F7B8C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
