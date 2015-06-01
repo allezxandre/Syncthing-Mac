@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB01B1CF70A0013476E /* SyncthingObjects.swift */; };
-		28416FB31B1D13260013476E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB21B1D13260013476E /* README.md */; };
+		28416FB51B1D13670013476E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB41B1D13670013476E /* README.md */; };
 		289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601101B04F4B100F7B8C0 /* AppDelegate.swift */; };
 		289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601121B04F4B100F7B8C0 /* ViewController.swift */; };
 		289601151B04F4B100F7B8C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 289601141B04F4B100F7B8C0 /* Images.xcassets */; };
@@ -30,7 +30,7 @@
 
 /* Begin PBXFileReference section */
 		28416FB01B1CF70A0013476E /* SyncthingObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncthingObjects.swift; sourceTree = "<group>"; };
-		28416FB21B1D13260013476E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		28416FB41B1D13670013476E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2896010B1B04F4B100F7B8C0 /* Syncthing GUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Syncthing GUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2896010F1B04F4B100F7B8C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		289601101B04F4B100F7B8C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +69,7 @@
 		289601021B04F4B100F7B8C0 = {
 			isa = PBXGroup;
 			children = (
+				28416FB41B1D13670013476E /* README.md */,
 				2896010D1B04F4B100F7B8C0 /* Syncthing GUI */,
 				289601201B04F4B100F7B8C0 /* Syncthing GUITests */,
 				2896010C1B04F4B100F7B8C0 /* Products */,
@@ -95,7 +96,6 @@
 				289601121B04F4B100F7B8C0 /* ViewController.swift */,
 				289601141B04F4B100F7B8C0 /* Images.xcassets */,
 				289601161B04F4B100F7B8C0 /* Main.storyboard */,
-				28416FB21B1D13260013476E /* README.md */,
 				2896010E1B04F4B100F7B8C0 /* Supporting Files */,
 			);
 			path = "Syncthing GUI";
@@ -296,7 +296,7 @@
 			files = (
 				289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */,
 				289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */,
-				28416FB31B1D13260013476E /* README.md in Sources */,
+				28416FB51B1D13670013476E /* README.md in Sources */,
 				28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */,
 				2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */,
 			);
