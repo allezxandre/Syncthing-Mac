@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB01B1CF70A0013476E /* SyncthingObjects.swift */; };
 		289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601101B04F4B100F7B8C0 /* AppDelegate.swift */; };
 		289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601121B04F4B100F7B8C0 /* ViewController.swift */; };
 		289601151B04F4B100F7B8C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 289601141B04F4B100F7B8C0 /* Images.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		28416FB01B1CF70A0013476E /* SyncthingObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncthingObjects.swift; sourceTree = "<group>"; };
 		2896010B1B04F4B100F7B8C0 /* Syncthing GUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Syncthing GUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2896010F1B04F4B100F7B8C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		289601101B04F4B100F7B8C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				2896012D1B04F64200F7B8C0 /* RestApi.swift */,
+				28416FB01B1CF70A0013476E /* SyncthingObjects.swift */,
 				289601101B04F4B100F7B8C0 /* AppDelegate.swift */,
 				289601121B04F4B100F7B8C0 /* ViewController.swift */,
 				289601141B04F4B100F7B8C0 /* Images.xcassets */,
@@ -290,6 +293,7 @@
 			files = (
 				289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */,
 				289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */,
+				28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */,
 				2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
