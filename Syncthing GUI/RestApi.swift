@@ -114,7 +114,7 @@ class RESTcall {
         // Database Endpoints
     
     func getDbBrowse(folder: String = "default", _ levels: Int) {
-        
+        // Do something
     }
     
     // MARK: Handlers
@@ -130,6 +130,18 @@ class RESTcall {
     }
     
     private func handleConfig(reponse: JSON) {
+        // Fetch folders
+        for (key: String, folder: JSON) in reponse["folders"] {
+            // Loop through folder devices
+            var folderDevices = [String]()
+            for (key: String, device: JSON) in folder["devices"] {
+                folderDevices += [device["deviceID"].stringValue]
+            }
+            // Get ID and Path (that's all we take for now)
+            let id = folder["id"].stringValue
+            let path = folder["path"].stringValue
+            self.syncthing.foldersInSync += Dictionary(dictionaryLiteral: (id, SyncthingFolder(id: id, forPathString: path, withDevices: folderDevices)))
+        }
         gotConfig = true
         return
     }

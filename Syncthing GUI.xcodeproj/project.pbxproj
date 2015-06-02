@@ -90,9 +90,9 @@
 		2896010D1B04F4B100F7B8C0 /* Syncthing GUI */ = {
 			isa = PBXGroup;
 			children = (
+				289601101B04F4B100F7B8C0 /* AppDelegate.swift */,
 				2896012D1B04F64200F7B8C0 /* RestApi.swift */,
 				28416FB01B1CF70A0013476E /* SyncthingObjects.swift */,
-				289601101B04F4B100F7B8C0 /* AppDelegate.swift */,
 				289601121B04F4B100F7B8C0 /* ViewController.swift */,
 				289601141B04F4B100F7B8C0 /* Images.xcassets */,
 				289601161B04F4B100F7B8C0 /* Main.storyboard */,

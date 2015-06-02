@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit
 
 // MARK: Syncthing subclasses
 
@@ -70,6 +71,29 @@ struct SyncthingStatus: Printable {
     }
 }
 
+/**
+    SyncthingFolders are stored in a dictionnary like `Dictionary<ID,SyncthingFolder>`, so the `id` variable from the `SyncthingFolder` class is a redundant information, but this is intended.
+*/
+class SyncthingFolder: Equatable, Printable {
+    var id: String
+    var path: NSURL
+    var devices: [String]
+    var description: String {
+        return "\(id)  (\(path)) - Devices: \(devices)"
+    }
+    
+    init(id withId: String, forPathString: String, withDevices: [String]) {
+        self.id = withId
+        if let location = NSURL(fileURLWithPath: forPathString.stringByExpandingTildeInPath, isDirectory: true) {
+            self.path = location
+        } else {
+            NSLog("Error parsing Folder Path: \(forPathString)")
+            self.path = NSURL()
+        }
+        self.devices = withDevices
+    }
+}
+
 // MARK: Equatable global functions
 
 
@@ -79,16 +103,22 @@ func ==(lhs: Connection, rhs: Connection) -> Bool {
 func ==(lhs: SyncthingError, rhs: SyncthingError) -> Bool {
     return (lhs.time == rhs.time) && (lhs.errorDescription == rhs.errorDescription)
 }
+func ==(lhs: SyncthingFolder, rhs: SyncthingFolder) -> Bool {
+    return (lhs.id == rhs.id) && (lhs.path == rhs.path)
+}
 
 // MARK: Syncthing Object
 
 class Syncthing: Printable {
+    // Variables
     var system: SyncthingStatus?
+    var foldersInSync = Dictionary<String,SyncthingFolder>()
     var connections = [Connection]()
     var errors = [SyncthingError]()
     /** A `String` describing the newest version. If the system is up-to-date, this is a `nil` */
     var possibleUpgrade: String?
     var configInSync: Bool = false
+    // For Printable:
     var description: String {
         var inSync: String = (configInSync) ? "In Sync":"Not In Sync"
         var updatable: String = (possibleUpgrade != nil) ? "An upgrade to \(possibleUpgrade) is available":"Syncthing is up-to-date"
@@ -104,6 +134,23 @@ class Syncthing: Printable {
             errorsString += " [\(error)]\n"
         }
         errorsString += "}"
-        return "System status: \(system)\n\(updatable)\n\(inSync)\nConnections :\(connectionsString)\nErrors :\(errorsString)"
+        // folders
+        var foldersString = "{\n"
+        for folder in foldersInSync {
+            foldersString += " [\(folder)]\n"
+        }
+        foldersString += "}"
+        return "System status: \(system)\n\(updatable)\n\(inSync)\nConnections :\(connectionsString)\nFolders: \(foldersString)\nErrors :\(errorsString)"
+    }
+    
+    // Functions
+    func revealFolder(#id: String) {
+        if let fileToReveal: NSURL = self.foldersInSync[id]?.path {
+            // http://stackoverflow.com/a/7658305/3997690
+            println("Revealing file: \(fileToReveal)")
+            NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([fileToReveal] as [NSURL])
+        } else {
+            NSLog("Error revealing folder with ID '\(id)'")
+        }
     }
 }
