@@ -27,3 +27,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 }
 
+// MARK: Global functions
+
+/** Adds a dictionnary to another */
+func += <KeyType, ValueType> (inout left: Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
+    for (k, v) in right {
+        left.updateValue(v, forKey: k)
+    }
+}
+

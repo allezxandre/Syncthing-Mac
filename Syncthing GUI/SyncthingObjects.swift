@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Syncthing subclasses
+
 class Connection : Equatable, Printable {
     var deviceID: String
     var ipAddress: String
@@ -54,25 +56,42 @@ class SyncthingError: Equatable, Printable {
     }
 }
 
-// Equatable global functions
+struct SyncthingStatus: Printable {
+    var alloc: Int
+    var cpuPercent: Double
+    var extAnnounceOK: Dictionary<String, Bool>
+    var goRoutines: Int
+    var myID: String
+    let pathSeparator = "/"
+    var sys: Int
+    var tilde: String
+    var description: String {
+        return "[alloc: \(self.alloc), cpuPercent: \(self.cpuPercent), extAnnounceOK: \(self.extAnnounceOK), goRoutines: \(self.goRoutines), myID: \"\(self.myID)\", pathSeparator: \"\(self.pathSeparator)\", sys: \(self.sys), tilde: \"\(self.tilde)\"]"
+    }
+}
+
+// MARK: Equatable global functions
 
 
 func ==(lhs: Connection, rhs: Connection) -> Bool {
     return (lhs.deviceID == rhs.deviceID)
 }
-
 func ==(lhs: SyncthingError, rhs: SyncthingError) -> Bool {
     return (lhs.time == rhs.time) && (lhs.errorDescription == rhs.errorDescription)
 }
 
-// Syncthing Object
+// MARK: Syncthing Object
 
-struct Syncthing: Printable {
+class Syncthing: Printable {
+    var system: SyncthingStatus?
     var connections = [Connection]()
     var errors = [SyncthingError]()
+    /** A `String` describing the newest version. If the system is up-to-date, this is a `nil` */
+    var possibleUpgrade: String?
     var configInSync: Bool = false
     var description: String {
         var inSync: String = (configInSync) ? "In Sync":"Not In Sync"
+        var updatable: String = (possibleUpgrade != nil) ? "An upgrade to \(possibleUpgrade) is available":"Syncthing is up-to-date"
         // connections
         var connectionsString = "{\n "
         for connection in connections {
@@ -85,6 +104,6 @@ struct Syncthing: Printable {
             errorsString += " [\(error)]\n"
         }
         errorsString += "}"
-        return "\(inSync)\nConnections :\(connectionsString)\nErrors :\(errorsString)"
+        return "System status: \(system)\n\(updatable)\n\(inSync)\nConnections :\(connectionsString)\nErrors :\(errorsString)"
     }
 }

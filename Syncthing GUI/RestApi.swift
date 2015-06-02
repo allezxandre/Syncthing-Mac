@@ -24,9 +24,10 @@ class RESTcall {
     var gotSyncStatus = false
     var gotConnections = false
     var gotErrors = false
+    var gotSystemStatus = false
     /** Returns `true` if everything has been fetched */
     var fetchedAll: Bool {
-        return (gotConfig && gotSyncStatus && gotConnections && gotErrors)
+        return (gotConfig && gotSyncStatus && gotConnections && gotErrors && gotSystemStatus)
     }
     
     // MARK: Basic class operations
@@ -41,8 +42,11 @@ class RESTcall {
     
     // MARK: Getters
     
+        // System Endpoints
+    
     func getAll() {
         pingSyncthingServer()
+        getSystemStatus()
         getConfig()
         getSyncStatus()
         getConnections()
@@ -87,6 +91,32 @@ class RESTcall {
         })
     }
     
+    func getSystemStatus() {
+        // http://docs.syncthing.net/rest/system-upgrade-get.html
+        httpGetRequest("/rest/system/upgrade", returnFunction: { (reponse) -> () in
+            if reponse["newer"].boolValue {
+                self.syncthing.possibleUpgrade = reponse["latest"].stringValue
+            } else {
+                self.syncthing.possibleUpgrade = nil
+            }
+        })
+        // http://docs.syncthing.net/rest/system-status-get.html
+        httpGetRequest("/rest/system/status", returnFunction: { (reponse) -> () in
+            var annouceDict = Dictionary<String, Bool>()
+            for (key: String, subJson: JSON) in reponse["extAnnounceOK"] {
+                annouceDict += Dictionary(dictionaryLiteral: (key, subJson.boolValue))
+            }
+            self.syncthing.system = SyncthingStatus(alloc: reponse["alloc"].intValue, cpuPercent: reponse["cpuPercent"].doubleValue, extAnnounceOK: annouceDict, goRoutines: reponse["goRoutines"].intValue, myID: reponse["myID"].stringValue, sys: reponse["sys"].intValue, tilde: reponse["tilde"].stringValue)
+            self.gotSystemStatus = true
+        })
+    }
+    
+        // Database Endpoints
+    
+    func getDbBrowse(folder: String = "default", _ levels: Int) {
+        
+    }
+    
     // MARK: Handlers
     // (they should be private)
     
@@ -106,6 +136,12 @@ class RESTcall {
     
     // MARK: Alamofire's HTTP
     
+    /** 
+    Emet un requête `GET` au serveur Syncthing, en suivant le chemin `urlPath`. La réponse du serveur est ensuite transmise à la fonction `returnFunction`
+    
+    :param: urlPath Le chemin (REST) de la requète
+    :param: returnFunction La fonction appelée avec la réponse de la requète en argument
+    */
     private func httpGetRequest(urlPath: String, returnFunction: AnswerHandler?) {
         Alamofire.request(.GET, baseUrl+":\(port)"+urlPath )
             .responseJSON { (req, res, json, error) in
