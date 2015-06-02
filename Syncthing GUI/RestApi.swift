@@ -113,8 +113,17 @@ class RESTcall {
     
         // Database Endpoints
     
-    func getDbBrowse(folder: String = "default", _ levels: Int) {
-        // Do something
+    func getDbBrowse(folder: String = "default",levels: Int? = nil) {
+        // http://docs.syncthing.net/rest/db-browse-get.html
+        if levels != nil {
+            httpGetRequest("/rest/db/browse", "?folder=\(folder)") { (reponse) -> () in
+                println(reponse) // That's all we do for now
+            }
+        } else {
+            httpGetRequest("/rest/db/browse", "?folder=\(folder)&levels=\(levels)") { (reponse) -> () in
+                println(reponse) // That's all we do for now
+            }
+        }
     }
     
     // MARK: Handlers
