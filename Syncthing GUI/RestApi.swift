@@ -149,13 +149,13 @@ class RESTcall {
     // MARK: Alamofire's HTTP
     
     /** 
-    Emet un requête `GET` au serveur Syncthing, en suivant le chemin `urlPath`. La réponse du serveur est ensuite transmise à la fonction `returnFunction`
+    Sends a `GET` request to the Syncthing Server for `urlPath`. The server response is then passed on to the `returnFunction` if there was no error.
     
-    :param: urlPath Le chemin (REST) de la requète
-    :param: returnFunction La fonction appelée avec la réponse de la requète en argument
+    :param: urlPath The request's REST path
+    :param: returnFunction The callback function when an answer has been received
     */
-    private func httpGetRequest(urlPath: String, returnFunction: AnswerHandler?) {
-        Alamofire.request(.GET, baseUrl+":\(port)"+urlPath )
+    private func httpGetRequest(urlPath: String,_ options: String = "", returnFunction: AnswerHandler?) {
+        Alamofire.request(.GET, baseUrl+":\(port)"+urlPath+options )
             .responseJSON { (req, res, json, error) in
                 if(error != nil) {
                     println(req)
