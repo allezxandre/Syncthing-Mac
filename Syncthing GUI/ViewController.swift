@@ -24,7 +24,8 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     @IBOutlet weak var spinningWheel: NSProgressIndicator!
     
     // MARK: IBActions
-    @IBAction func refreshButtonPressed(sender: NSButton) {
+    @IBAction func refreshButtonPressed(sender: AnyObject) {
+        println("button Pressed by \(sender)")
         syncthingSystem.fetchEverything()
     }
     

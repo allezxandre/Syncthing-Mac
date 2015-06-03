@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class FolderView: NSView {
+class FolderView: NSTableCellView {
     
     var delegateInteraction: SyncthingInteractionDelegate!
     
