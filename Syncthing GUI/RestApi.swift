@@ -132,6 +132,11 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         }
     }
     
+    func getFolderStatus(folder: String) {
+        // http://docs.syncthing.net/rest/db-status-get.html
+        httpGetRequest("/rest/db/status", "?folder=\(folder)", returnFunction: handleFolderStatus(folder))
+    }
+    
     // MARK: Handlers
     // (they should be private)
     
@@ -142,6 +147,14 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
             syncthing.connections += [Connection(thisDeviceID: key, thisIpAddress: subJson["address"].stringValue, bytesIn: subJson["inBytesTotal"].intValue, bytesOut: subJson["outBytesTotal"].intValue)]
         }
         gotConnections = true
+    }
+    
+    private func handleFolderStatus(folderString: String)(reponse: JSON) -> () {
+        println("handleFolderStatus(\(folderString))(\(reponse))")
+        syncthing.foldersInSync[folderString]?.idle = (reponse["state"].stringValue == "idle")
+        syncthing.foldersInSync[folderString]?.inSyncBytes = reponse["inSyncBytes"].intValue
+        syncthing.foldersInSync[folderString]?.outOfSyncBytes = reponse["needBytes"].intValue
+        self.delegateForDisplay.reloadData()
     }
     
     private func handleConfig(reponse: JSON) {
@@ -156,6 +169,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
             let id = folder["id"].stringValue
             let path = folder["path"].stringValue
             self.syncthing.foldersInSync += Dictionary(dictionaryLiteral: (id, SyncthingFolder(id: id, forPathString: path, withDevices: folderDevices)))
+            getFolderStatus(id)
         }
         gotConfig = true
         return

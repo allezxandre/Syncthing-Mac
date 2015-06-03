@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IwD-E6-Nju">
-                    <rect key="frame" x="18" y="50" width="219" height="21"/>
+                    <rect key="frame" x="18" y="50" width="204" height="21"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" placeholderString="Folder Name" id="inC-Um-VPy">
                         <font key="font" metaFont="system" size="17"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -20,15 +20,39 @@
                     </textFieldCell>
                 </textField>
                 <progressIndicator maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="zpy-AK-wRI">
-                    <rect key="frame" x="243" y="50" width="135" height="20"/>
+                    <rect key="frame" x="228" y="50" width="150" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="135" id="roR-yg-P8F"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="Faw-14-bAf"/>
                     </constraints>
                 </progressIndicator>
-                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zVc-E6-9H8">
-                    <rect key="frame" x="356" y="12" width="26" height="27"/>
+                <pathControl focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zR4-KW-DD0">
+                    <rect key="frame" x="13" y="20" width="311" height="17"/>
+                    <pathCell key="cell" selectable="YES" focusRingType="none" alignment="left" placeholderString="Folder Path" id="76q-6v-SMk">
+                        <font key="font" metaFont="system"/>
+                    </pathCell>
+                </pathControl>
+                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GF5-hX-GDz">
+                    <rect key="frame" x="360" y="51" width="20" height="20"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="22" id="CNX-8P-YdZ"/>
+                        <constraint firstAttribute="width" constant="20" id="iBU-hW-pwS"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSMenuOnStateTemplate" id="g69-hw-cpV"/>
+                </imageView>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0HN-KF-OAh">
+                    <rect key="frame" x="351" y="14" width="30" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="KJ1-4h-fhX"/>
+                        <constraint firstAttribute="width" constant="22" id="UQU-Lg-BqG"/>
+                    </constraints>
+                    <buttonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iiX-18-SNx">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zVc-E6-9H8">
+                    <rect key="frame" x="323" y="14" width="26" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="r00-6i-Vr3"/>
                     </constraints>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSRevealFreestandingTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" id="c1C-aN-Gf6">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -38,29 +62,28 @@
                         <action selector="revealFolder:" target="Hz6-mo-xeY" id="fFy-Fz-6iw"/>
                     </connections>
                 </button>
-                <pathControl focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zR4-KW-DD0">
-                    <rect key="frame" x="13" y="20" width="337" height="17"/>
-                    <pathCell key="cell" selectable="YES" focusRingType="none" alignment="left" placeholderString="Folder Path" id="76q-6v-SMk">
-                        <font key="font" metaFont="system"/>
-                    </pathCell>
-                </pathControl>
             </subviews>
             <constraints>
-                <constraint firstItem="zVc-E6-9H8" firstAttribute="top" secondItem="zR4-KW-DD0" secondAttribute="top" id="62h-h4-TR6"/>
-                <constraint firstAttribute="bottom" secondItem="zVc-E6-9H8" secondAttribute="bottom" constant="15" id="9NO-R8-Tqi"/>
-                <constraint firstItem="IwD-E6-Nju" firstAttribute="centerY" secondItem="zpy-AK-wRI" secondAttribute="centerY" id="BGB-HH-bJQ"/>
-                <constraint firstItem="IwD-E6-Nju" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="Bwu-nF-Ovf"/>
-                <constraint firstItem="IwD-E6-Nju" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="LE1-Gw-Yae"/>
-                <constraint firstItem="zR4-KW-DD0" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="13" id="QQ9-f2-M5I"/>
-                <constraint firstItem="zR4-KW-DD0" firstAttribute="top" secondItem="IwD-E6-Nju" secondAttribute="bottom" constant="13" id="R8O-i4-phm"/>
-                <constraint firstAttribute="trailing" secondItem="zVc-E6-9H8" secondAttribute="trailing" constant="20" symbolic="YES" id="RMg-1Z-y09"/>
-                <constraint firstItem="zVc-E6-9H8" firstAttribute="leading" secondItem="zR4-KW-DD0" secondAttribute="trailing" constant="8" symbolic="YES" id="XTy-eD-3SZ"/>
-                <constraint firstAttribute="bottom" secondItem="zR4-KW-DD0" secondAttribute="bottom" constant="20" symbolic="YES" id="j0J-Tk-kGG"/>
-                <constraint firstItem="zpy-AK-wRI" firstAttribute="leading" secondItem="IwD-E6-Nju" secondAttribute="trailing" constant="8" symbolic="YES" id="tb2-Oj-yGb"/>
-                <constraint firstAttribute="trailing" secondItem="zpy-AK-wRI" secondAttribute="trailing" constant="22" id="xpH-0y-OKz"/>
+                <constraint firstItem="IwD-E6-Nju" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="3Bm-n9-bqz"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="centerY" secondItem="0HN-KF-OAh" secondAttribute="centerY" id="6ii-mx-Wq5"/>
+                <constraint firstItem="0HN-KF-OAh" firstAttribute="leading" secondItem="zVc-E6-9H8" secondAttribute="trailing" constant="8" symbolic="YES" id="7aM-JY-Yck"/>
+                <constraint firstItem="IwD-E6-Nju" firstAttribute="top" secondItem="GF5-hX-GDz" secondAttribute="top" id="F4M-2F-eVj"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="leading" secondItem="zR4-KW-DD0" secondAttribute="trailing" constant="1" id="GCV-7U-DeW"/>
+                <constraint firstAttribute="bottom" secondItem="zR4-KW-DD0" secondAttribute="bottom" constant="20" symbolic="YES" id="NdA-Kl-PVf"/>
+                <constraint firstItem="zR4-KW-DD0" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="13" id="Pvh-tO-L2m"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="top" secondItem="zpy-AK-wRI" secondAttribute="bottom" constant="12" id="QId-jp-LSL"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="centerY" secondItem="zR4-KW-DD0" secondAttribute="centerY" id="SNP-cP-DOr"/>
+                <constraint firstAttribute="trailing" secondItem="GF5-hX-GDz" secondAttribute="trailing" constant="20" symbolic="YES" id="UzW-Lb-eYW"/>
+                <constraint firstAttribute="trailing" secondItem="zpy-AK-wRI" secondAttribute="trailing" constant="22" id="bTq-9c-PZr"/>
+                <constraint firstItem="GF5-hX-GDz" firstAttribute="bottom" secondItem="zpy-AK-wRI" secondAttribute="bottom" id="j32-M9-OWb"/>
+                <constraint firstItem="IwD-E6-Nju" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="nem-X6-PDf"/>
+                <constraint firstItem="zpy-AK-wRI" firstAttribute="leading" secondItem="IwD-E6-Nju" secondAttribute="trailing" constant="8" symbolic="YES" id="ngk-FI-If2"/>
+                <constraint firstAttribute="trailing" secondItem="0HN-KF-OAh" secondAttribute="trailing" constant="23" id="pR3-pO-XJZ"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="top" secondItem="0HN-KF-OAh" secondAttribute="top" id="zKJ-Kd-QZV"/>
             </constraints>
             <accessibility description="Folder View"/>
             <connections>
+                <outlet property="folderIdleImage" destination="GF5-hX-GDz" id="fwU-ZV-ndV"/>
                 <outlet property="folderName" destination="IwD-E6-Nju" id="3DY-al-mfq"/>
                 <outlet property="folderPath" destination="zR4-KW-DD0" id="yEr-bV-EfS"/>
                 <outlet property="folderProgressIndicator" destination="zpy-AK-wRI" id="b8p-aW-Ctk"/>
@@ -69,6 +92,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="NSMenuOnStateTemplate" width="12" height="12"/>
         <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
     </resources>
 </document>

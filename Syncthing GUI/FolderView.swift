@@ -16,10 +16,25 @@ class FolderView: NSView {
     @IBOutlet weak var folderName: NSTextField!
     @IBOutlet weak var folderPath: NSPathControl!
     @IBOutlet weak var folderProgressIndicator: NSProgressIndicator!
+    @IBOutlet weak var folderIdleImage: NSImageView!
     
     // MARK: IBActions
     @IBAction func revealFolder(sender: NSButton) {
         self.delegateInteraction.openFolder(folderName.stringValue)
+    }
+    
+    // MARK: Variables
+    
+    var syncIdle: Bool = false {
+        didSet{
+            folderIdleImage.hidden = !self.syncIdle
+            folderProgressIndicator.hidden = self.syncIdle
+            if self.syncIdle {
+                folderProgressIndicator.stopAnimation(nil)
+            } else {
+                folderProgressIndicator.startAnimation(nil)
+            }
+        }
     }
     
     override func drawRect(dirtyRect: NSRect) {

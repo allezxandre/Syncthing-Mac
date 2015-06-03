@@ -78,6 +78,23 @@ class SyncthingFolder: Equatable, Printable {
     var id: String
     var path: NSURL
     var devices: [String]
+    var idle: Bool = false
+    var inSyncBytes: Int? = nil
+    var outOfSyncBytes: Int? = nil
+    var folderSize: Int? {
+        if (inSyncBytes == nil)||(outOfSyncBytes == nil) {
+            return nil
+        } else {
+            return inSyncBytes! + outOfSyncBytes!
+        }
+    }
+    var syncPercentage: Double? {
+        if (inSyncBytes == nil)||(folderSize == nil) {
+            return nil
+        } else {
+            return Double(inSyncBytes!)/Double(folderSize!) * Double(100)
+        }
+    }
     var description: String {
         return "\(id)  (\(path)) - Devices: \(devices)"
     }
