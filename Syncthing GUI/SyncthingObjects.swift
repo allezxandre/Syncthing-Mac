@@ -113,6 +113,14 @@ class Syncthing: Printable {
     // Variables
     var system: SyncthingStatus?
     var foldersInSync = Dictionary<String,SyncthingFolder>()
+    /** This variable stores all available folders */
+    var foldersList: [String] { // If you have duplicate folders, here's the culprit
+        var list = [String]()
+        for (id: String, _: SyncthingFolder) in self.foldersInSync {
+            list += [id]
+        }
+        return list
+    }
     var connections = [Connection]()
     var errors = [SyncthingError]()
     /** A `String` describing the newest version. If the system is up-to-date, this is a `nil` */

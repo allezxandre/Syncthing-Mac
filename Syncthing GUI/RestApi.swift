@@ -10,8 +10,14 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+protocol SyncthingInteractionDelegate {
+    func openFolder(id: String) -> ()
+}
+
 // As from Syncthing's wiki page: https://github.com/syncthing/syncthing/wiki/REST-Interface
-class RESTcall {
+class SyncthingCommunication: SyncthingInteractionDelegate {
+    // MARK: Delegate
+    var delegateForDisplay: SyncthingDisplayDelegate!
     // MARK: Variables
     var baseUrl = "http://localhost"
     var port: Int = 8080
@@ -44,7 +50,7 @@ class RESTcall {
     
         // System Endpoints
     
-    func getAll() {
+    func fetchEverything() {
         pingSyncthingServer()
         getSystemStatus()
         getConfig()
@@ -177,6 +183,7 @@ class RESTcall {
                         // Display our Syncthing object
                         if self.fetchedAll {
                             println(self.syncthing)
+                            self.delegateForDisplay.reloadData()
                         }
                         return
                     } else {
@@ -184,5 +191,11 @@ class RESTcall {
                     }
                 }
         }
+    }
+    
+    // MARK: SyncthingInteractionDelegate
+    
+    func openFolder(id: String) {
+        syncthing.revealFolder(id: id)
     }
 }
