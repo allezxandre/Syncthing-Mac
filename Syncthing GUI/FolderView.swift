@@ -17,6 +17,7 @@ class FolderView: NSView {
     @IBOutlet weak var folderPath: NSPathControl!
     @IBOutlet weak var folderProgressIndicator: NSProgressIndicator!
     @IBOutlet weak var folderIdleImage: NSImageView!
+    @IBOutlet weak var inSyncLabel: NSTextField!
     
     // MARK: IBActions
     @IBAction func revealFolder(sender: NSButton) {
@@ -28,6 +29,7 @@ class FolderView: NSView {
     var syncIdle: Bool = false {
         didSet{
             folderIdleImage.hidden = !self.syncIdle
+            inSyncLabel.hidden = !self.syncIdle
             folderProgressIndicator.hidden = self.syncIdle
             if self.syncIdle {
                 folderProgressIndicator.stopAnimation(nil)

@@ -676,12 +676,12 @@
                             <visualEffectView appearanceType="vibrantLight" blendingMode="behindWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="k15-24-HVd">
                                 <rect key="frame" x="0.0" y="0.0" width="601" height="359"/>
                                 <subviews>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KQC-Dq-4Wt">
+                                    <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KQC-Dq-4Wt">
                                         <rect key="frame" x="567" y="334" width="23" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="23" id="nMo-U3-mNx"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRefreshFreestandingTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="etD-bY-Oxq">
+                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRefreshFreestandingTemplate" imagePosition="only" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="etD-bY-Oxq">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
@@ -695,14 +695,14 @@
                                     <constraint firstAttribute="trailing" secondItem="KQC-Dq-4Wt" secondAttribute="trailing" constant="11" id="pri-mT-rLM"/>
                                 </constraints>
                             </visualEffectView>
-                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="49" horizontalPageScroll="10" verticalLineScroll="49" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="j9X-ta-wiH">
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="48" horizontalPageScroll="10" verticalLineScroll="48" verticalPageScroll="10" translatesAutoresizingMaskIntoConstraints="NO" id="j9X-ta-wiH">
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="359"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hAD-DP-2lu">
                                     <rect key="frame" x="1" y="17" width="238" height="117"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="47" rowSizeStyle="automatic" viewBased="YES" id="Pce-qz-RzV">
-                                            <rect key="frame" x="0.0" y="0.0" width="253" height="0.0"/>
+                                        <tableView focusRingType="none" appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="46" rowSizeStyle="automatic" viewBased="YES" id="Pce-qz-RzV">
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -752,11 +752,11 @@
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="5ae-P8-9bE"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="YES" id="UIQ-z2-1ae">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="UIQ-z2-1ae">
                                     <rect key="frame" x="1" y="117.53879237174988" width="237" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" appearanceType="vibrantLight" verticalHuggingPriority="750" horizontal="NO" id="qe2-rj-Yzv">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="qe2-rj-Yzv">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
