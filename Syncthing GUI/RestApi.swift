@@ -11,7 +11,8 @@ import Alamofire
 import SwiftyJSON
 
 protocol SyncthingInteractionDelegate {
-    func openFolder(id: String) -> ()
+    func openFolder(String) -> ()
+    func rescanFolder(String) -> ()
 }
 
 // As from Syncthing's wiki page: https://github.com/syncthing/syncthing/wiki/REST-Interface
@@ -19,8 +20,17 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     // MARK: Delegate
     var delegateForDisplay: SyncthingDisplayDelegate!
     // MARK: Variables
-    var baseUrl = "http://localhost"
+    var baseUrlString: String = "http://localhost"
+    var baseUrl: NSURL {
+        if let url = NSURL(string: baseUrlString+":"+String(stringInterpolationSegment: port)) {
+            return url
+        } else {
+            NSLog("There was an error retrieving URL: '\(baseUrlString)':'\(port)'")
+            return NSURL(string: "http://localhost:8080")!
+        }
+    }
     var port: Int = 8080
+    var apiKey: String? = nil
     var syncthing: Syncthing = Syncthing()
         // Boolean variables
     /** Is true when the Syncthing server is answering Ping requests */
@@ -37,10 +47,6 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     }
     
     // MARK: Basic class operations
-    
-    func changeUrl(to: String) {
-        self.baseUrl = to
-    }
     
     func changePort(to: Int) {
         self.port = to
@@ -61,7 +67,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     func pingSyncthingServer() {
         // http://docs.syncthing.net/rest/system-ping-get.html
-        httpGetRequest("/rest/system/ping", returnFunction: { (reponse:JSON) -> () in
+        httpRequest(.GET, urlPath:"/rest/system/ping", returnFunction: { (reponse:JSON) -> () in
             self.systemIsOnline = (reponse["ping"].stringValue == "pong")
             println("System is online: \(self.systemIsOnline)")
         })
@@ -69,12 +75,12 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     func getConfig() {
         // http://docs.syncthing.net/rest/system-config-get.html
-        httpGetRequest("/rest/system/config", returnFunction: handleConfig)
+        httpRequest(.GET, urlPath:"/rest/system/config", returnFunction: handleConfig)
     }
     
     func getSyncStatus() {
         // http://docs.syncthing.net/rest/system-config-insync-get.html
-        httpGetRequest("/rest/system/config/insync", returnFunction: {
+        httpRequest(.GET, urlPath:"/rest/system/config/insync", returnFunction: {
             (reponse: JSON) in
                 self.syncthing.configInSync = reponse["configInSync"].boolValue
                 self.gotSyncStatus = true
@@ -83,12 +89,12 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     func getConnections() {
         // http://docs.syncthing.net/rest/system-connections-get.html
-        httpGetRequest("/rest/system/connections", returnFunction: handleConnections)
+        httpRequest(.GET, urlPath:"/rest/system/connections", returnFunction: handleConnections)
     }
     
     func getErrors() {
         // http://docs.syncthing.net/rest/system-error-get.html
-        httpGetRequest("/rest/system/error", returnFunction: {
+        httpRequest(.GET, urlPath:"/rest/system/error", returnFunction: {
             (reponse: JSON) in
             for (key: String, subJson: JSON) in reponse["errors"] {
                 self.syncthing.errors += [SyncthingError(error: subJson["error"].stringValue, withDateString: subJson["time"].stringValue)]
@@ -99,7 +105,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     func getSystemStatus() {
         // http://docs.syncthing.net/rest/system-upgrade-get.html
-        httpGetRequest("/rest/system/upgrade", returnFunction: { (reponse) -> () in
+        httpRequest(.GET, urlPath:"/rest/system/upgrade", returnFunction: { (reponse) -> () in
             if reponse["newer"].boolValue {
                 self.syncthing.possibleUpgrade = reponse["latest"].stringValue
             } else {
@@ -107,7 +113,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
             }
         })
         // http://docs.syncthing.net/rest/system-status-get.html
-        httpGetRequest("/rest/system/status", returnFunction: { (reponse) -> () in
+        httpRequest(.GET, urlPath:"/rest/system/status", returnFunction: { (reponse) -> () in
             var annouceDict = Dictionary<String, Bool>()
             for (key: String, subJson: JSON) in reponse["extAnnounceOK"] {
                 annouceDict += Dictionary(dictionaryLiteral: (key, subJson.boolValue))
@@ -122,11 +128,11 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     func getDbBrowse(folder: String = "default",levels: Int? = nil) {
         // http://docs.syncthing.net/rest/db-browse-get.html
         if levels != nil {
-            httpGetRequest("/rest/db/browse", "?folder=\(folder)") { (reponse) -> () in
+            httpRequest(.GET, urlPath:"/rest/db/browse", parameters: ["folder": folder]) { (reponse) -> () in
                 println(reponse) // That's all we do for now
             }
         } else {
-            httpGetRequest("/rest/db/browse", "?folder=\(folder)&levels=\(levels)") { (reponse) -> () in
+            httpRequest(.GET, urlPath:"/rest/db/browse", parameters: ["folder": folder, "levels": String(stringInterpolationSegment: levels)]) { (reponse) -> () in
                 println(reponse) // That's all we do for now
             }
         }
@@ -134,7 +140,15 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     func getFolderStatus(folder: String) {
         // http://docs.syncthing.net/rest/db-status-get.html
-        httpGetRequest("/rest/db/status", "?folder=\(folder)", returnFunction: handleFolderStatus(folder))
+        httpRequest(.GET, urlPath:"/rest/db/status", parameters: ["folder": folder], returnFunction: handleFolderStatus(folder))
+    }
+    
+    // MARK: POSTERS
+        // Database Endpoints
+    
+    func rescanFolder(id: String) {
+        // http://docs.syncthing.net/rest/db-scan-post.html
+        httpRequest(.POST, urlPath: "/rest/db/scan", parameters: ["folder": id], body: nil, returnFunction: nil)
     }
     
     // MARK: Handlers
@@ -177,32 +191,68 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     // MARK: Alamofire's HTTP
     
-    /** 
-    Sends a `GET` request to the Syncthing Server for `urlPath`. The server response is then passed on to the `returnFunction` if there was no error.
+    /**
+    Sends a `requestType` request to the Syncthing Server for `urlPath`, with `parameters`. For `POST` requests, a the request body might be set in the `body` parameter. 
     
+    The server response is then passed on to the `returnFunction` if there was no error.
+    
+    :param: requestType The HTTP request type
     :param: urlPath The request's REST path
+    :param: parameters A dictionnary of parameters for the URL
+    :param: body The JSON data to pass to the body for a `POST` request
     :param: returnFunction The callback function when an answer has been received
     */
-    private func httpGetRequest(urlPath: String,_ options: String = "", returnFunction: AnswerHandler?) {
-        Alamofire.request(.GET, baseUrl+":\(port)"+urlPath+options )
+    private func httpRequest(requestType: Alamofire.Method, urlPath: String,parameters: Dictionary<String,String>? = nil, body: Dictionary<String,AnyObject>? = nil, returnFunction: AnswerHandler?) {
+        // Prepare Request
+        let completeUrl = NSURL(string: urlPath, relativeToURL: self.baseUrl)
+        // Create an url of type NSMutableURLRequest
+        let urlMutableRequest: NSMutableURLRequest = NSMutableURLRequest(URL: completeUrl!)
+        let httpMethod: String
+        var JSONSerializationError: NSError? = nil
+        switch requestType {
+        case .GET:
+            urlMutableRequest.HTTPMethod = "GET"
+        case .POST:
+            urlMutableRequest.HTTPMethod = "POST"
+            // Process body if requestType is .POST
+            if (body != nil) {
+                urlMutableRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(body!, options: nil, error: &JSONSerializationError)
+            }
+        default:
+            NSLog("Received unexpected requestType: \(requestType)")
+            urlMutableRequest.HTTPMethod = "GET"
+        }
+        // Add API key to headers
+        urlMutableRequest.setValue(apiKey, forHTTPHeaderField: "X-API-Key")
+        
+        // Add parameters to URL
+        let urlRequest: URLRequestConvertible
+        if parameters != nil {
+            urlRequest = Alamofire.ParameterEncoding.URL.encode(urlMutableRequest, parameters: parameters).0
+        } else {
+            urlRequest = urlMutableRequest
+        }
+        
+        // Make Request
+        Alamofire.request(urlRequest)
             .responseJSON { (req, res, json, error) in
                 if(error != nil) {
                     println(req)
                     println(res)
+                    println("Error retrieving JSON: \n\(error!)")
                 } else {
                     println("Received data from \(urlPath)")
-                    let resultat = JSON(json!)
                     if returnFunction != nil {
+                        let resultat = JSON(json!)
                         returnFunction!(resultat)
-                        // Display our Syncthing object
+                        // Display our Syncthing object for debugging purposes
                         if self.fetchedAll {
                             println(self.syncthing)
                             self.delegateForDisplay.reloadData()
                         }
                         return
-                    } else {
-                        return
                     }
+                    return
                 }
         }
     }

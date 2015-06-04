@@ -17,7 +17,6 @@
 		2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2896012D1B04F64200F7B8C0 /* RestApi.swift */; };
 		28C068961B1F184300D71DA2 /* FolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28C068941B1F184300D71DA2 /* FolderView.xib */; };
 		28C068981B1F314E00D71DA2 /* FolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C068971B1F314E00D71DA2 /* FolderView.swift */; };
-		28C0689C1B1FB64C00D71DA2 /* FolderCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C0689B1B1FB64C00D71DA2 /* FolderCellView.swift */; };
 		E3EEDE418256028A30F62D7E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03BEC06D14A93E840BACE34 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -47,7 +46,6 @@
 		289601451B0512CF00F7B8C0 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Downloads/SwiftyJSON-master/build/Debug/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		28C068941B1F184300D71DA2 /* FolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FolderView.xib; sourceTree = "<group>"; };
 		28C068971B1F314E00D71DA2 /* FolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
-		28C0689B1B1FB64C00D71DA2 /* FolderCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderCellView.swift; sourceTree = "<group>"; };
 		50BE4DB0317C33951683760B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		85AD70C55ED11C1E9CA202C8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E03BEC06D14A93E840BACE34 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,7 +98,6 @@
 				2896012D1B04F64200F7B8C0 /* RestApi.swift */,
 				28416FB01B1CF70A0013476E /* SyncthingObjects.swift */,
 				289601161B04F4B100F7B8C0 /* Main.storyboard */,
-				28C0689B1B1FB64C00D71DA2 /* FolderCellView.swift */,
 				28C068941B1F184300D71DA2 /* FolderView.xib */,
 				28C068971B1F314E00D71DA2 /* FolderView.swift */,
 				289601121B04F4B100F7B8C0 /* ViewController.swift */,
@@ -310,7 +307,6 @@
 				28416FB51B1D13670013476E /* README.md in Sources */,
 				28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */,
 				2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */,
-				28C0689C1B1FB64C00D71DA2 /* FolderCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

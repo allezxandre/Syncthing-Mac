@@ -23,6 +23,9 @@ class FolderView: NSTableCellView {
     @IBAction func revealFolder(sender: NSButton) {
         self.delegateInteraction.openFolder(folderName.stringValue)
     }
+    @IBAction func rescanFolder(sender: AnyObject) {
+        self.delegateInteraction.rescanFolder(folderName.stringValue)
+    }
     
     // MARK: Variables
     

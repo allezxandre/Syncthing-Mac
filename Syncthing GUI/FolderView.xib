@@ -29,20 +29,17 @@
                     </constraints>
                 </progressIndicator>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zVc-E6-9H8">
-                    <rect key="frame" x="323" y="-1" width="26" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="22" id="r00-6i-Vr3"/>
-                    </constraints>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSRevealFreestandingTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" id="c1C-aN-Gf6">
+                    <rect key="frame" x="333" y="4" width="18" height="19"/>
+                    <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSRightFacingTriangleTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" id="c1C-aN-Gf6">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="smallSystemBold"/>
                     </buttonCell>
                     <connections>
                         <action selector="revealFolder:" target="Hz6-mo-xeY" id="fFy-Fz-6iw"/>
                     </connections>
                 </button>
                 <pathControl focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zR4-KW-DD0">
-                    <rect key="frame" x="13" y="5" width="311" height="17"/>
+                    <rect key="frame" x="13" y="5" width="319" height="17"/>
                     <pathCell key="cell" selectable="YES" focusRingType="none" alignment="left" placeholderString="Folder Path" id="76q-6v-SMk">
                         <font key="font" metaFont="system"/>
                     </pathCell>
@@ -55,15 +52,18 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSMenuOnStateTemplate" id="g69-hw-cpV"/>
                 </imageView>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0HN-KF-OAh">
-                    <rect key="frame" x="351" y="-1" width="30" height="27"/>
+                    <rect key="frame" x="359" y="4" width="18" height="19"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="22" id="KJ1-4h-fhX"/>
-                        <constraint firstAttribute="width" constant="22" id="UQU-Lg-BqG"/>
+                        <constraint firstAttribute="height" constant="18" id="KJ1-4h-fhX"/>
+                        <constraint firstAttribute="width" constant="18" id="UQU-Lg-BqG"/>
                     </constraints>
-                    <buttonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iiX-18-SNx">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                    <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSRefreshTemplate" imagePosition="only" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iiX-18-SNx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystemBold"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="rescanFolder:" target="Hz6-mo-xeY" id="vWD-KG-BiJ"/>
+                    </connections>
                 </button>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BDd-SX-ODK">
                     <rect key="frame" x="278" y="36" width="79" height="17"/>
@@ -92,7 +92,9 @@
                 <constraint firstAttribute="trailing" secondItem="GF5-hX-GDz" secondAttribute="trailing" constant="20" symbolic="YES" id="UzW-Lb-eYW"/>
                 <constraint firstItem="BDd-SX-ODK" firstAttribute="centerY" secondItem="IwD-E6-Nju" secondAttribute="centerY" id="ZTQ-gB-1Oo"/>
                 <constraint firstAttribute="trailing" secondItem="zpy-AK-wRI" secondAttribute="trailing" constant="22" id="bTq-9c-PZr"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="width" secondItem="0HN-KF-OAh" secondAttribute="width" id="fbk-KC-zgz"/>
                 <constraint firstItem="GF5-hX-GDz" firstAttribute="leading" secondItem="BDd-SX-ODK" secondAttribute="trailing" constant="5" id="ggR-ko-5Z4"/>
+                <constraint firstItem="zVc-E6-9H8" firstAttribute="height" secondItem="0HN-KF-OAh" secondAttribute="height" id="luV-Kk-FDY"/>
                 <constraint firstItem="IwD-E6-Nju" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="nem-X6-PDf"/>
                 <constraint firstItem="zpy-AK-wRI" firstAttribute="leading" secondItem="IwD-E6-Nju" secondAttribute="trailing" constant="8" symbolic="YES" id="ngk-FI-If2"/>
                 <constraint firstAttribute="trailing" secondItem="0HN-KF-OAh" secondAttribute="trailing" constant="23" id="pR3-pO-XJZ"/>
@@ -111,6 +113,7 @@
     </objects>
     <resources>
         <image name="NSMenuOnStateTemplate" width="12" height="12"/>
-        <image name="NSRevealFreestandingTemplate" width="14" height="14"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
+        <image name="NSRightFacingTriangleTemplate" width="9" height="12"/>
     </resources>
 </document>
