@@ -11,12 +11,12 @@ import AppKit
 
 // MARK: Syncthing subclasses
 
-class Connection : Equatable, Printable {
+class Connection : Equatable, CustomStringConvertible {
     var deviceID: String
     var ipAddress: String
     var bytesIn: Int = 0
     var bytesOut: Int = 0
-    var description: String { // used by println -> http://vperi.com/2014/06/04/textual-representation-for-classes-in-swift/
+    var description: String { // used by print -> http://vperi.com/2014/06/04/textual-representation-for-classes-in-swift/
         return "[\n Device ID: '\(deviceID)',\n IP Address: '\(ipAddress)',\n Bytes In: \(bytesIn),\n Bytes Out: \(bytesOut)\n]"
     }
     init(thisDeviceID: String, thisIpAddress: String) {
@@ -31,7 +31,7 @@ class Connection : Equatable, Printable {
     }
 }
 
-class SyncthingError: Equatable, Printable {
+class SyncthingError: Equatable, CustomStringConvertible {
     var time: NSDate
     var errorDescription: String
     var description: String {
@@ -43,7 +43,7 @@ class SyncthingError: Equatable, Printable {
     }
     init(error: String, withDateString: String) {
         self.errorDescription = error
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         // As from Wikipedia:
         // http://en.wikipedia.org/wiki/ISO_8601
         // http://fr.wikipedia.org/wiki/ISO_8601
@@ -57,7 +57,7 @@ class SyncthingError: Equatable, Printable {
     }
 }
 
-struct SyncthingStatus: Printable {
+struct SyncthingStatus: CustomStringConvertible {
     var alloc: Int
     var cpuPercent: Double
     var extAnnounceOK: Dictionary<String, Bool>
@@ -74,7 +74,7 @@ struct SyncthingStatus: Printable {
 /**
     SyncthingFolders are stored in a dictionnary like `Dictionary<ID,SyncthingFolder>`, so the `id` variable from the `SyncthingFolder` class is a redundant information, but this is intended.
 */
-class SyncthingFolder: Equatable, Printable {
+class SyncthingFolder: Equatable, CustomStringConvertible {
     var id: String
     var path: NSURL
     var devices: [String]
@@ -101,12 +101,7 @@ class SyncthingFolder: Equatable, Printable {
     
     init(id withId: String, forPathString: String, withDevices: [String]) {
         self.id = withId
-        if let location = NSURL(fileURLWithPath: forPathString.stringByExpandingTildeInPath, isDirectory: true) {
-            self.path = location
-        } else {
-            NSLog("Error parsing Folder Path: \(forPathString)")
-            self.path = NSURL()
-        }
+        self.path = NSURL(fileURLWithPath: forPathString.stringByExpandingTildeInPath, isDirectory: true)
         self.devices = withDevices
     }
 }
@@ -126,14 +121,14 @@ func ==(lhs: SyncthingFolder, rhs: SyncthingFolder) -> Bool {
 
 // MARK: Syncthing Object
 
-class Syncthing: Printable {
+class Syncthing: CustomStringConvertible {
     // Variables
     var system: SyncthingStatus?
     var foldersInSync = Dictionary<String,SyncthingFolder>()
     /** This variable stores all available folders */
     var foldersList: [String] { // If you have duplicate folders, here's the culprit
         var list = [String]()
-        for (id: String, _: SyncthingFolder) in self.foldersInSync {
+        for (id, _): (String, SyncthingFolder) in self.foldersInSync {
             list += [id]
         }
         return list
@@ -145,8 +140,8 @@ class Syncthing: Printable {
     var configInSync: Bool = false
     // For Printable:
     var description: String {
-        var inSync: String = (configInSync) ? "In Sync":"Not In Sync"
-        var updatable: String = (possibleUpgrade != nil) ? "An upgrade to \(possibleUpgrade) is available":"Syncthing is up-to-date"
+        let inSync: String = (configInSync) ? "In Sync":"Not In Sync"
+        let updatable: String = (possibleUpgrade != nil) ? "An upgrade to \(possibleUpgrade) is available":"Syncthing is up-to-date"
         // connections
         var connectionsString = "{\n "
         for connection in connections {
@@ -169,10 +164,10 @@ class Syncthing: Printable {
     }
     
     // Functions
-    func revealFolder(#id: String) {
+    func revealFolder(id id: String) {
         if let fileToReveal: NSURL = self.foldersInSync[id]?.path {
             // http://stackoverflow.com/a/7658305/3997690
-            println("Revealing file: \(fileToReveal)")
+            print("Revealing file: \(fileToReveal)")
             NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([fileToReveal] as [NSURL])
         } else {
             NSLog("Error revealing folder with ID '\(id)'")

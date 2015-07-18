@@ -43,7 +43,6 @@
 		289601221B04F4B100F7B8C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		289601231B04F4B100F7B8C0 /* Syncthing_GUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Syncthing_GUITests.swift; sourceTree = "<group>"; };
 		2896012D1B04F64200F7B8C0 /* RestApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApi.swift; sourceTree = "<group>"; };
-		289601451B0512CF00F7B8C0 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Downloads/SwiftyJSON-master/build/Debug/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		28C068941B1F184300D71DA2 /* FolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FolderView.xib; sourceTree = "<group>"; };
 		28C068971B1F314E00D71DA2 /* FolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderView.swift; sourceTree = "<group>"; };
 		50BE4DB0317C33951683760B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -135,7 +134,6 @@
 		2CAD2DFB68A1CC25C2E8E8A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				289601451B0512CF00F7B8C0 /* SwiftyJSON.framework */,
 				E03BEC06D14A93E840BACE34 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -197,7 +195,8 @@
 		289601031B04F4B100F7B8C0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Alexandre Jouandin";
 				TargetAttributes = {
 					2896010A1B04F4B100F7B8C0 = {
@@ -361,6 +360,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -432,6 +432,8 @@
 				);
 				INFOPLIST_FILE = "Syncthing GUI/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "in.jouand.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -448,6 +450,8 @@
 				);
 				INFOPLIST_FILE = "Syncthing GUI/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "in.jouand.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -467,6 +471,7 @@
 				);
 				INFOPLIST_FILE = "Syncthing GUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "in.jouand.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Syncthing GUI.app/Contents/MacOS/Syncthing GUI";
 			};
@@ -483,6 +488,7 @@
 				);
 				INFOPLIST_FILE = "Syncthing GUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "in.jouand.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Syncthing GUI.app/Contents/MacOS/Syncthing GUI";
 			};

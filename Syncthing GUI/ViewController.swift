@@ -25,7 +25,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     
     // MARK: IBActions
     @IBAction func refreshButtonPressed(sender: AnyObject) {
-        println("button Pressed by \(sender)")
+        print("button Pressed by \(sender)")
         syncthingSystem.fetchEverything()
     }
     

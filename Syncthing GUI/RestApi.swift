@@ -69,7 +69,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         // http://docs.syncthing.net/rest/system-ping-get.html
         httpRequest(.GET, urlPath:"/rest/system/ping", returnFunction: { (reponse:JSON) -> () in
             self.systemIsOnline = (reponse["ping"].stringValue == "pong")
-            println("System is online: \(self.systemIsOnline)")
+            print("System is online: \(self.systemIsOnline)")
         })
     }
     
@@ -96,7 +96,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         // http://docs.syncthing.net/rest/system-error-get.html
         httpRequest(.GET, urlPath:"/rest/system/error", returnFunction: {
             (reponse: JSON) in
-            for (key: String, subJson: JSON) in reponse["errors"] {
+            for (key, subJson): (String, JSON) in reponse["errors"] {
                 self.syncthing.errors += [SyncthingError(error: subJson["error"].stringValue, withDateString: subJson["time"].stringValue)]
             }
             self.gotErrors = true
@@ -115,7 +115,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         // http://docs.syncthing.net/rest/system-status-get.html
         httpRequest(.GET, urlPath:"/rest/system/status", returnFunction: { (reponse) -> () in
             var annouceDict = Dictionary<String, Bool>()
-            for (key: String, subJson: JSON) in reponse["extAnnounceOK"] {
+            for (key, subJson): (String, JSON) in reponse["extAnnounceOK"] {
                 annouceDict += Dictionary(dictionaryLiteral: (key, subJson.boolValue))
             }
             self.syncthing.system = SyncthingStatus(alloc: reponse["alloc"].intValue, cpuPercent: reponse["cpuPercent"].doubleValue, extAnnounceOK: annouceDict, goRoutines: reponse["goRoutines"].intValue, myID: reponse["myID"].stringValue, sys: reponse["sys"].intValue, tilde: reponse["tilde"].stringValue)
@@ -129,11 +129,11 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         // http://docs.syncthing.net/rest/db-browse-get.html
         if levels != nil {
             httpRequest(.GET, urlPath:"/rest/db/browse", parameters: ["folder": folder]) { (reponse) -> () in
-                println(reponse) // That's all we do for now
+                print(reponse) // That's all we do for now
             }
         } else {
             httpRequest(.GET, urlPath:"/rest/db/browse", parameters: ["folder": folder, "levels": String(stringInterpolationSegment: levels)]) { (reponse) -> () in
-                println(reponse) // That's all we do for now
+                print(reponse) // That's all we do for now
             }
         }
     }
@@ -157,14 +157,14 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     typealias AnswerHandler = (JSON) -> ()
     
     private func handleConnections(reponse: JSON) {
-        for (key: String, subJson:JSON) in reponse["connections"] {
+        for (key, subJson): (String, JSON) in reponse["connections"] {
             syncthing.connections += [Connection(thisDeviceID: key, thisIpAddress: subJson["address"].stringValue, bytesIn: subJson["inBytesTotal"].intValue, bytesOut: subJson["outBytesTotal"].intValue)]
         }
         gotConnections = true
     }
     
     private func handleFolderStatus(folderString: String)(reponse: JSON) -> () {
-        println("handleFolderStatus(\(folderString))(\(reponse))")
+        print("handleFolderStatus(\(folderString))(\(reponse))")
         syncthing.foldersInSync[folderString]?.idle = (reponse["state"].stringValue == "idle")
         syncthing.foldersInSync[folderString]?.inSyncBytes = reponse["inSyncBytes"].intValue
         syncthing.foldersInSync[folderString]?.outOfSyncBytes = reponse["needBytes"].intValue
@@ -173,10 +173,10 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     private func handleConfig(reponse: JSON) {
         // Fetch folders
-        for (key: String, folder: JSON) in reponse["folders"] {
+        for (key, folder): (String, JSON) in reponse["folders"] {
             // Loop through folder devices
             var folderDevices = [String]()
-            for (key: String, device: JSON) in folder["devices"] {
+            for (key, device): (String, JSON) in folder["devices"] {
                 folderDevices += [device["deviceID"].stringValue]
             }
             // Get ID and Path (that's all we take for now)
@@ -196,11 +196,11 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     The server response is then passed on to the `returnFunction` if there was no error.
     
-    :param: requestType The HTTP request type
-    :param: urlPath The request's REST path
-    :param: parameters A dictionnary of parameters for the URL
-    :param: body The JSON data to pass to the body for a `POST` request
-    :param: returnFunction The callback function when an answer has been received
+    - parameter requestType: The HTTP request type
+    - parameter urlPath: The request's REST path
+    - parameter parameters: A dictionnary of parameters for the URL
+    - parameter body: The JSON data to pass to the body for a `POST` request
+    - parameter returnFunction: The callback function when an answer has been received
     */
     private func httpRequest(requestType: Alamofire.Method, urlPath: String,parameters: Dictionary<String,String>? = nil, body: Dictionary<String,AnyObject>? = nil, returnFunction: AnswerHandler?) {
         // Prepare Request
@@ -216,7 +216,12 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
             urlMutableRequest.HTTPMethod = "POST"
             // Process body if requestType is .POST
             if (body != nil) {
-                urlMutableRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(body!, options: nil, error: &JSONSerializationError)
+                do {
+                    urlMutableRequest.HTTPBody = try NSJSONSerialization.dataWithJSONObject(body!, options: [])
+                } catch var error as NSError {
+                    JSONSerializationError = error
+                    urlMutableRequest.HTTPBody = nil
+                }
             }
         default:
             NSLog("Received unexpected requestType: \(requestType)")
@@ -237,17 +242,17 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         Alamofire.request(urlRequest)
             .responseJSON { (req, res, json, error) in
                 if(error != nil) {
-                    println(req)
-                    println(res)
-                    println("Error retrieving JSON: \n\(error!)")
+                    print(req)
+                    print(res)
+                    print("Error retrieving JSON: \n\(error!)")
                 } else {
-                    println("Received data from \(urlPath)")
+                    print("Received data from \(urlPath)")
                     if returnFunction != nil {
                         let resultat = JSON(json!)
                         returnFunction!(resultat)
                         // Display our Syncthing object for debugging purposes
                         if self.fetchedAll {
-                            println(self.syncthing)
+                            print(self.syncthing)
                             self.delegateForDisplay.reloadData()
                         }
                         return
