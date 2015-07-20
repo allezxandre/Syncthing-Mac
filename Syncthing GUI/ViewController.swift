@@ -91,15 +91,27 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
 extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
     
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
-        return syncthingSystem.syncthing.foldersInSync.count
+        if syncthingSystem.syncthing.foldersInSync.count > 0 {
+            return syncthingSystem.syncthing.foldersInSync.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        let cell = tableView.makeViewWithIdentifier("syncthingFolderView", owner: nil) as! FolderView
-        return cell.frame.height
+        if syncthingSystem.syncthing.foldersInSync.count > 0 {
+            let cell = tableView.makeViewWithIdentifier("syncthingFolderView", owner: nil) as! FolderView
+            return cell.frame.height
+        } else {
+            let cell = tableView.makeViewWithIdentifier("noSyncthingFolderView", owner: nil)
+            return cell!.frame.height
+        }
     }
     
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        if syncthingSystem.syncthing.foldersInSync.count < 1 {
+            return tableView.makeViewWithIdentifier("noSyncthingFolderView", owner: nil)
+        }
         let cell = tableView.makeViewWithIdentifier("syncthingFolderView", owner: nil) as! FolderView
         let folderId = syncthingSystem.syncthing.foldersList[row]
         let folder = syncthingSystem.syncthing.foldersInSync[folderId]

@@ -769,8 +769,31 @@
                                                     </textFieldCell>
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
+                                                        <tableCellView identifier="noSyncthingFolderView" id="KnI-Do-FqA">
+                                                            <rect key="frame" x="1" y="1" width="570" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vUG-2v-WFl">
+                                                                    <rect key="frame" x="230" y="7" width="111" height="17"/>
+                                                                    <animations/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No folder in sync" id="IZp-C4-dGG">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                </textField>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="vUG-2v-WFl" firstAttribute="centerY" secondItem="KnI-Do-FqA" secondAttribute="centerY" id="N62-Kr-73m"/>
+                                                                <constraint firstItem="vUG-2v-WFl" firstAttribute="centerX" secondItem="KnI-Do-FqA" secondAttribute="centerX" id="TDz-dm-uAW"/>
+                                                            </constraints>
+                                                            <animations/>
+                                                            <connections>
+                                                                <outlet property="textField" destination="vUG-2v-WFl" id="Fqn-Kc-XHM"/>
+                                                            </connections>
+                                                        </tableCellView>
                                                         <customView identifier="syncthingFolderView" id="75E-tw-qfc" customClass="FolderView" customModule="Syncthing_GUI" customModuleProvider="target">
-                                                            <rect key="frame" x="1" y="1" width="570" height="65"/>
+                                                            <rect key="frame" x="1" y="33" width="570" height="65"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6m-1p-zNS">
@@ -792,7 +815,7 @@
                                                                     </constraints>
                                                                     <animations/>
                                                                 </progressIndicator>
-                                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PD4-NZ-zmX">
+                                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PD4-NZ-zmX" userLabel="Open In Finder Button">
                                                                     <rect key="frame" x="503" y="5" width="18" height="18"/>
                                                                     <animations/>
                                                                     <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSRevealFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" id="1E8-Uc-vCp">
@@ -804,7 +827,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <pathControl focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0wG-ha-5uI">
-                                                                    <rect key="frame" x="13" y="5" width="489" height="17"/>
+                                                                    <rect key="frame" x="13" y="5" width="470" height="17"/>
                                                                     <animations/>
                                                                     <pathCell key="cell" selectable="YES" focusRingType="none" alignment="left" placeholderString="Folder Path" id="PvC-Gu-5Qd">
                                                                         <font key="font" metaFont="system"/>
@@ -818,7 +841,7 @@
                                                                     <animations/>
                                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSMenuOnStateTemplate" id="4Wd-vv-l6h"/>
                                                                 </imageView>
-                                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GYs-jN-VrS">
+                                                                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GYs-jN-VrS" userLabel="Refresh Button">
                                                                     <rect key="frame" x="529" y="5" width="18" height="18"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="18" id="2wA-qD-PrT"/>
@@ -866,8 +889,8 @@
                                                                 <constraint firstAttribute="bottom" secondItem="0wG-ha-5uI" secondAttribute="bottom" priority="750" constant="5" id="jfl-To-LFy"/>
                                                                 <constraint firstItem="r1b-ME-vCX" firstAttribute="leading" secondItem="A6m-1p-zNS" secondAttribute="trailing" constant="8" symbolic="YES" id="ozp-qP-3bV"/>
                                                                 <constraint firstItem="PD4-NZ-zmX" firstAttribute="centerY" secondItem="0wG-ha-5uI" secondAttribute="centerY" id="sFP-rY-IDI"/>
+                                                                <constraint firstItem="PD4-NZ-zmX" firstAttribute="leading" secondItem="0wG-ha-5uI" secondAttribute="trailing" constant="20" id="uEV-HM-Mvj"/>
                                                                 <constraint firstItem="GYs-jN-VrS" firstAttribute="leading" secondItem="PD4-NZ-zmX" secondAttribute="trailing" constant="8" symbolic="YES" id="wej-Hl-Lbb"/>
-                                                                <constraint firstItem="PD4-NZ-zmX" firstAttribute="leading" secondItem="0wG-ha-5uI" secondAttribute="trailing" constant="1" id="xXX-g2-VFq"/>
                                                             </constraints>
                                                             <animations/>
                                                             <accessibility description="Folder View"/>
@@ -879,25 +902,6 @@
                                                                 <outlet property="inSyncLabel" destination="HdM-D4-NZK" id="dBE-VC-qE9"/>
                                                             </connections>
                                                         </customView>
-                                                        <tableCellView id="d0g-IF-C75">
-                                                            <rect key="frame" x="1" y="68" width="570" height="46"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FcA-eh-VVb">
-                                                                    <rect key="frame" x="0.0" y="30" width="100" height="17"/>
-                                                                    <animations/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="aT2-Ig-3gu">
-                                                                        <font key="font" metaFont="system"/>
-                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                    </textFieldCell>
-                                                                </textField>
-                                                            </subviews>
-                                                            <animations/>
-                                                            <connections>
-                                                                <outlet property="textField" destination="FcA-eh-VVb" id="x16-BX-ZiK"/>
-                                                            </connections>
-                                                        </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
                                             </tableColumns>
