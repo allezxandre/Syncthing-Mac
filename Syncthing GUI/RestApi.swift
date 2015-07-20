@@ -26,6 +26,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
             return url
         } else {
             NSLog("There was an error retrieving URL: '\(baseUrlString)':'\(port)'")
+            // By default, we return localhost on port 8080
             return NSURL(string: "http://localhost:8080")!
         }
     }
@@ -207,7 +208,6 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         let completeUrl = NSURL(string: urlPath, relativeToURL: self.baseUrl)
         // Create an url of type NSMutableURLRequest
         let urlMutableRequest: NSMutableURLRequest = NSMutableURLRequest(URL: completeUrl!)
-        let httpMethod: String
         var JSONSerializationError: NSError? = nil
         switch requestType {
         case .GET:
