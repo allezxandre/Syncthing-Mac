@@ -12,6 +12,8 @@ class FolderView: NSTableCellView {
     
     var delegateInteraction: SyncthingInteractionDelegate!
     
+    var folder: SyncthingFolder!
+    
     // MARK: IBOutlets
     @IBOutlet weak var folderName: NSTextField!
     @IBOutlet weak var folderPath: NSPathControl!

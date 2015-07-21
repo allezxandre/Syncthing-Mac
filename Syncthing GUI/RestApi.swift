@@ -5,6 +5,7 @@
 //  Created by Alexandre Jouandin on 2015/05/14.
 //  Copyright (c) 2015 Alexandre Jouandin. All rights reserved.
 //
+// This file is where all the frontend <=> backend magic happens.
 
 import Foundation
 import Alamofire
@@ -14,6 +15,8 @@ protocol SyncthingInteractionDelegate {
     func openFolder(String) -> ()
     func rescanFolder(String) -> ()
 }
+
+typealias AnswerHandler = (JSON) -> ()
 
 // As from Syncthing's wiki page: https://github.com/syncthing/syncthing/wiki/REST-Interface
 class SyncthingCommunication: SyncthingInteractionDelegate {
@@ -97,7 +100,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         // http://docs.syncthing.net/rest/system-error-get.html
         httpRequest(.GET, urlPath:"/rest/system/error", returnFunction: {
             (reponse: JSON) in
-            for (key, subJson): (String, JSON) in reponse["errors"] {
+            for (_, subJson): (String, JSON) in reponse["errors"] {
                 self.syncthing.errors += [SyncthingError(error: subJson["error"].stringValue, withDateString: subJson["time"].stringValue)]
             }
             self.gotErrors = true
@@ -126,16 +129,17 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
         // Database Endpoints
     
-    func getDbBrowse(folder: String = "default",levels: Int? = nil) {
+    func getDbBrowse(folder: String = "default", levels: Int? = nil, prefix: String? = nil, handlerFunction: AnswerHandler) {
         // http://docs.syncthing.net/rest/db-browse-get.html
+        var parameters = ["folder": folder]
         if levels != nil {
-            httpRequest(.GET, urlPath:"/rest/db/browse", parameters: ["folder": folder]) { (reponse) -> () in
-                print(reponse) // That's all we do for now
-            }
-        } else {
-            httpRequest(.GET, urlPath:"/rest/db/browse", parameters: ["folder": folder, "levels": String(stringInterpolationSegment: levels)]) { (reponse) -> () in
-                print(reponse) // That's all we do for now
-            }
+            parameters += ["levels": String(stringInterpolationSegment: levels)]
+        }
+        if prefix != nil {
+            parameters += ["prefix": prefix!]
+        }
+        httpRequest(.GET, urlPath: "/rest/db/browse", parameters: parameters, body: nil) { (response) -> () in
+            handlerFunction(response)
         }
     }
     
@@ -155,8 +159,6 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     // MARK: Handlers
     // (they should be private)
     
-    typealias AnswerHandler = (JSON) -> ()
-    
     private func handleConnections(reponse: JSON) {
         for (key, subJson): (String, JSON) in reponse["connections"] {
             syncthing.connections += [Connection(thisDeviceID: key, thisIpAddress: subJson["address"].stringValue, bytesIn: subJson["inBytesTotal"].intValue, bytesOut: subJson["outBytesTotal"].intValue)]
@@ -174,10 +176,10 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     
     private func handleConfig(reponse: JSON) {
         // Fetch folders
-        for (key, folder): (String, JSON) in reponse["folders"] {
+        for (_, folder): (String, JSON) in reponse["folders"] {
             // Loop through folder devices
             var folderDevices = [String]()
-            for (key, device): (String, JSON) in folder["devices"] {
+            for (_, device): (String, JSON) in folder["devices"] {
                 folderDevices += [device["deviceID"].stringValue]
             }
             // Get ID and Path (that's all we take for now)

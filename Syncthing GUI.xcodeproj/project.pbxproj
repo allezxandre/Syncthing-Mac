@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		282C6E0B1B5D9DFD00CD6C04 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E0A1B5D9DFD00CD6C04 /* MainWindowController.swift */; };
+		282C6E151B5DA69900CD6C04 /* InspectorTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E141B5DA69900CD6C04 /* InspectorTabViewController.swift */; };
+		282C6E171B5DAE6E00CD6C04 /* FileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E161B5DAE6E00CD6C04 /* FileView.swift */; };
+		282C6E1B1B5DB10300CD6C04 /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E1A1B5DB10300CD6C04 /* FileViewController.swift */; };
+		282C6E1D1B5DB11200CD6C04 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E1C1B5DB11200CD6C04 /* StatusViewController.swift */; };
+		282C6E1F1B5DB45C00CD6C04 /* FileTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E1E1B5DB45C00CD6C04 /* FileTableCellView.swift */; };
 		28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB01B1CF70A0013476E /* SyncthingObjects.swift */; };
 		28416FB51B1D13670013476E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB41B1D13670013476E /* README.md */; };
 		289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601101B04F4B100F7B8C0 /* AppDelegate.swift */; };
@@ -30,6 +36,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		282C6E0A1B5D9DFD00CD6C04 /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		282C6E141B5DA69900CD6C04 /* InspectorTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InspectorTabViewController.swift; sourceTree = "<group>"; };
+		282C6E161B5DAE6E00CD6C04 /* FileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileView.swift; sourceTree = "<group>"; };
+		282C6E1A1B5DB10300CD6C04 /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
+		282C6E1C1B5DB11200CD6C04 /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		282C6E1E1B5DB45C00CD6C04 /* FileTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTableCellView.swift; sourceTree = "<group>"; };
 		28416FB01B1CF70A0013476E /* SyncthingObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncthingObjects.swift; sourceTree = "<group>"; };
 		28416FB41B1D13670013476E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2896010B1B04F4B100F7B8C0 /* Syncthing GUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Syncthing GUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +79,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		282C6E0C1B5D9E0900CD6C04 /* Window Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				282C6E0A1B5D9DFD00CD6C04 /* MainWindowController.swift */,
+			);
+			name = "Window Controllers";
+			sourceTree = "<group>";
+		};
+		282C6E0D1B5D9E2000CD6C04 /* Syncthing API */ = {
+			isa = PBXGroup;
+			children = (
+				2896012D1B04F64200F7B8C0 /* RestApi.swift */,
+				28416FB01B1CF70A0013476E /* SyncthingObjects.swift */,
+			);
+			name = "Syncthing API";
+			sourceTree = "<group>";
+		};
+		282C6E0E1B5D9E3200CD6C04 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				289601121B04F4B100F7B8C0 /* ViewController.swift */,
+				282C6E141B5DA69900CD6C04 /* InspectorTabViewController.swift */,
+				282C6E1C1B5DB11200CD6C04 /* StatusViewController.swift */,
+				282C6E1A1B5DB10300CD6C04 /* FileViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		282C6E0F1B5D9E3C00CD6C04 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				28C068971B1F314E00D71DA2 /* FolderView.swift */,
+				282C6E1E1B5DB45C00CD6C04 /* FileTableCellView.swift */,
+				282C6E161B5DAE6E00CD6C04 /* FileView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		289601021B04F4B100F7B8C0 = {
 			isa = PBXGroup;
 			children = (
@@ -92,11 +142,11 @@
 			isa = PBXGroup;
 			children = (
 				289601101B04F4B100F7B8C0 /* AppDelegate.swift */,
-				2896012D1B04F64200F7B8C0 /* RestApi.swift */,
-				28416FB01B1CF70A0013476E /* SyncthingObjects.swift */,
 				289601161B04F4B100F7B8C0 /* Main.storyboard */,
-				28C068971B1F314E00D71DA2 /* FolderView.swift */,
-				289601121B04F4B100F7B8C0 /* ViewController.swift */,
+				282C6E0C1B5D9E0900CD6C04 /* Window Controllers */,
+				282C6E0D1B5D9E2000CD6C04 /* Syncthing API */,
+				282C6E0E1B5D9E3200CD6C04 /* View Controllers */,
+				282C6E0F1B5D9E3C00CD6C04 /* Views */,
 				289601141B04F4B100F7B8C0 /* Images.xcassets */,
 				2896010E1B04F4B100F7B8C0 /* Supporting Files */,
 			);
@@ -296,11 +346,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				282C6E151B5DA69900CD6C04 /* InspectorTabViewController.swift in Sources */,
 				289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */,
+				282C6E0B1B5D9DFD00CD6C04 /* MainWindowController.swift in Sources */,
 				28C068981B1F314E00D71DA2 /* FolderView.swift in Sources */,
 				289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */,
 				28416FB51B1D13670013476E /* README.md in Sources */,
+				282C6E1B1B5DB10300CD6C04 /* FileViewController.swift in Sources */,
+				282C6E171B5DAE6E00CD6C04 /* FileView.swift in Sources */,
 				28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */,
+				282C6E1F1B5DB45C00CD6C04 /* FileTableCellView.swift in Sources */,
+				282C6E1D1B5DB11200CD6C04 /* StatusViewController.swift in Sources */,
 				2896012E1B04F64200F7B8C0 /* RestApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

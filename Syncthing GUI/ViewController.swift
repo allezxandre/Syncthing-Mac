@@ -9,6 +9,13 @@
 import Cocoa
 import AppKit
 
+//
+//                     Start in this file
+//             if you want to understand the logic
+//               behind Syncthing Remote for Mac
+//
+
+
 protocol SyncthingDisplayDelegate {
     func reloadData() -> ()
 }
@@ -84,6 +91,15 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         folderTableView.hidden = false
         folderTableView.reloadData()
     }
+    
+    override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {
+        //let source: ViewController = segue.sourceController as! ViewController
+        let button = sender as! NSButton
+        let folderView: FolderView = button.superview as! FolderView
+        let destination: InspectorTabViewController = segue.destinationController as! InspectorTabViewController
+        destination.folder = folderView.folder
+        destination.syncthingSystem = syncthingSystem
+    }
 }
 
 // http://nscurious.com/2015/04/08/using-view-based-nstableview-with-swift/
@@ -115,6 +131,7 @@ extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
         let cell = tableView.makeViewWithIdentifier("syncthingFolderView", owner: nil) as! FolderView
         let folderId = syncthingSystem.syncthing.foldersList[row]
         let folder = syncthingSystem.syncthing.foldersInSync[folderId]
+        cell.folder = folder!
         // set folder display
             cell.folderName.stringValue = folder!.id
             cell.folderPath.URL = folder!.path

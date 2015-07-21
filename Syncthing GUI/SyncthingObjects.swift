@@ -106,6 +106,17 @@ class SyncthingFolder: Equatable, CustomStringConvertible {
     }
 }
 
+class File {
+    var name: String
+    var path: NSURL
+    var synced: Bool? = nil
+    
+    init(withName: String, atPath: NSURL) {
+        self.name = withName
+        self.path = atPath
+    }
+}
+
 // MARK: Equatable global functions
 
 
