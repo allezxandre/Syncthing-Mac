@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Alexandre Jouandin. All rights reserved.
 //
 // This file is where all the frontend <=> backend magic happens.
+// It defines all functions that will fetch data for us.
 
 import Foundation
 import Alamofire
@@ -128,8 +129,10 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     }
     
         // Database Endpoints
-    
-    func getDbBrowse(folder: String = "default", levels: Int? = nil, prefix: String? = nil, handlerFunction: AnswerHandler) {
+    /**
+    Browse the file database according to [Syncthing's documentation](http://docs.syncthing.net/rest/db-browse-get.html).
+    */
+    func getDbBrowse(folder: String, levels: Int? = nil, prefix: String? = nil, handlerFunction: AnswerHandler) {
         // http://docs.syncthing.net/rest/db-browse-get.html
         var parameters = ["folder": folder]
         if levels != nil {
@@ -151,6 +154,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     // MARK: POSTERS
         // Database Endpoints
     
+    /** An HTTP POST request to ask for a folder re-scan. [Please see documentation](http://docs.syncthing.net/rest/db-scan-post.html) for more information */
     func rescanFolder(id: String) {
         // http://docs.syncthing.net/rest/db-scan-post.html
         httpRequest(.POST, urlPath: "/rest/db/scan", parameters: ["folder": id], body: nil, returnFunction: nil)

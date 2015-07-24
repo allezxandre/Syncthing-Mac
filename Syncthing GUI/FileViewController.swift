@@ -36,12 +36,17 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
     init(with: SyncthingCommunication, forFolder: String) {
         self.syncthingSystem = with
         self.folderID = forFolder
-        FileSystemItem.rootItem = FileSystemItem(path: "\(folderID)/", parent: nil)
+        // Initialize FileSystemItem
+        FileSystemItem.rootItem = FileSystemItem(path: "\(folderID)", parent: nil, isAFolder: true)
+        syncthingSystem.getDbBrowse(forFolder, levels: nil, prefix: nil) { (response) -> () in
+            FileSystemItem.files_json = response
+            FileSystemItem.readFileTree()
+        }
     }
     
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
         if item == nil {
-            return 1
+            return (FileSystemItem.rootItem.numberOfChildren == nil) ? 0 : FileSystemItem.rootItem.numberOfChildren!
         } else {
             let object = item as! FileSystemItem
             return (object.numberOfChildren == nil) ? 0 : object.numberOfChildren!
@@ -55,7 +60,7 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
     
     func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
         if item == nil {
-            return FileSystemItem.rootItem!
+            return FileSystemItem.rootItem
         } else {
             let object = item as! FileSystemItem
             return object.childAtIndex(index)
@@ -64,7 +69,7 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
     
     func outlineView(outlineView: NSOutlineView, objectValueForTableColumn tableColumn: NSTableColumn?, byItem item: AnyObject?) -> AnyObject? {
         if item == nil {
-            return "/"
+            return "\(folderID)"
         } else {
             let object = item as! FileSystemItem
             return object.relativePath
@@ -77,16 +82,53 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
 class FileSystemItem: NSObject {
     var relativePath: String
     var parent: FileSystemItem?
-    var children: NSMutableArray
+    var children: [FileSystemItem]?
     
-    static var rootItem: FileSystemItem? = nil
+    static var initialized: Bool = false
+    static var files_json: JSON!
+    static var rootItem: FileSystemItem!
     
-    init(path: String, parent: FileSystemItem?) {
+    init(path: String, parent: FileSystemItem?, isAFolder: Bool) {
         self.relativePath = path.lastPathComponent
         self.parent = parent
-        self.children = NSMutableArray()
+        if isAFolder {
+            self.children = [FileSystemItem]()
+        } else {
+            self.children = nil
+        }
     }
     
+    /** Reads the JSON file tree using `files_json` and `rootItem` */
+    class func readFileTree() -> () {
+        // We suppose that `files_json` has been loaded and `rootItem` has been initialized
+        for (key, subjson): (String, JSON) in files_json {
+            rootItem.interpretTypeOfChild(name: key, json: subjson)
+        }
+        initialized = true
+    }
+    
+    /** Interprets a JSON to build the FileSystemTree */
+    private func interpretTypeOfChild(name name: String, json: JSON) {
+        if let _ = json[1].int {
+            // We have a size, so this is a file
+            // Create item
+            let file = FileSystemItem(path: name, parent: parent, isAFolder: false)
+            // Add it to list of childrens of the parent folder
+            self.children! += [file]
+        } else {
+            // We don't have a size, so this is a folder
+            // Create item
+            let file = FileSystemItem(path: name, parent: parent, isAFolder: true)
+            // Add it to list of childrens of the parent folder
+            self.children! += [file]
+            // loop through childrens
+            for (key, subjson): (String, JSON) in json {
+                file.interpretTypeOfChild(name: key, json: subjson)
+            }
+        }
+    }
+    
+    /** Returns the full path of an item by recursively appending its parents `relativePath`s */
     var fullPath: String {
         if parent == nil {
             return relativePath
@@ -96,11 +138,17 @@ class FileSystemItem: NSObject {
     }
     
     func childAtIndex(n: Int) -> FileSystemItem {
-        return children.objectAtIndex(n) as! FileSystemItem
+        if !FileSystemItem.initialized {
+            return FileSystemItem.rootItem
+        }
+        assert(self.children != nil, "`self.children` is nil. Looks like you're trying to access the childrens of a file")
+        return self.children![n]
     }
     
     var numberOfChildren: Int? {
-        let tmp = self.children
-        return (tmp == NSMutableArray()) ? nil : (tmp.count)
+        if !FileSystemItem.initialized {
+            return nil
+        }
+        return (self.children == nil) ? nil : (self.children!.count)
     }
 }
