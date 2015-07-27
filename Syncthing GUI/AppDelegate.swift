@@ -10,6 +10,10 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+    
+    func applicationWillFinishLaunching(notification: NSNotification) {
+        
+    }
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         

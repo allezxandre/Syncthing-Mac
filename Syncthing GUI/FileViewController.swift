@@ -25,7 +25,7 @@ class FileViewController: NSViewController, NSOutlineViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // We create a data source for our outline view
-        outlineFileListView.setDataSource(FileOutlineDataSource(with: self.syncthingSystem, forFolder: self.folder.id))
+        FileOutlineDataSource(with: self.syncthingSystem, forFolder: self.folder.id)
     }
 }
 
@@ -37,19 +37,21 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
         self.syncthingSystem = with
         self.folderID = forFolder
         // Initialize FileSystemItem
+        
         FileSystemItem.rootItem = FileSystemItem(path: "\(folderID)", parent: nil, isAFolder: true)
         syncthingSystem.getDbBrowse(forFolder, levels: nil, prefix: nil) { (response) -> () in
             FileSystemItem.files_json = response
             FileSystemItem.readFileTree()
         }
+
     }
-    
+    /*
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
         if item == nil {
-            return (FileSystemItem.rootItem.numberOfChildren == nil) ? 0 : FileSystemItem.rootItem.numberOfChildren!
+            return 0// (FileSystemItem.rootItem.numberOfChildren == nil) ? 0 : FileSystemItem.rootItem.numberOfChildren!
         } else {
             let object = item as! FileSystemItem
-            return (object.numberOfChildren == nil) ? 0 : object.numberOfChildren!
+            return (object.numberOfChildren == nil) ? -1 : object.numberOfChildren!
         }
     }
 
@@ -60,7 +62,7 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
     
     func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
         if item == nil {
-            return FileSystemItem.rootItem
+            return FileSystemItem.rootItem.childAtIndex(index)
         } else {
             let object = item as! FileSystemItem
             return object.childAtIndex(index)
@@ -75,7 +77,7 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
             return object.relativePath
         }
     }
-    
+    */
 
 }
 
@@ -100,6 +102,8 @@ class FileSystemItem: NSObject {
     
     /** Reads the JSON file tree using `files_json` and `rootItem` */
     class func readFileTree() -> () {
+        print("File list has been pulled")
+        print(files_json)
         // We suppose that `files_json` has been loaded and `rootItem` has been initialized
         for (key, subjson): (String, JSON) in files_json {
             rootItem.interpretTypeOfChild(name: key, json: subjson)
@@ -147,6 +151,7 @@ class FileSystemItem: NSObject {
     
     var numberOfChildren: Int? {
         if !FileSystemItem.initialized {
+            print("File system not ready yet...")
             return nil
         }
         return (self.children == nil) ? nil : (self.children!.count)

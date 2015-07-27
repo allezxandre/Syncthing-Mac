@@ -214,7 +214,7 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
         let completeUrl = NSURL(string: urlPath, relativeToURL: self.baseUrl)
         // Create an url of type NSMutableURLRequest
         let urlMutableRequest: NSMutableURLRequest = NSMutableURLRequest(URL: completeUrl!)
-        var JSONSerializationError: NSError? = nil
+        // var JSONSerializationError: NSError? = nil
         switch requestType {
         case .GET:
             urlMutableRequest.HTTPMethod = "GET"
@@ -224,8 +224,8 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
             if (body != nil) {
                 do {
                     urlMutableRequest.HTTPBody = try NSJSONSerialization.dataWithJSONObject(body!, options: [])
-                } catch var error as NSError {
-                    JSONSerializationError = error
+                } catch let error as NSError {
+                    print(error)
                     urlMutableRequest.HTTPBody = nil
                 }
             }

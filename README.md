@@ -10,6 +10,8 @@ I'm nowhere near experienced in Swift, and this project was intended as a way to
 
 ## Building
 
+This project uses Swift 2.0 syntax. You'll need Xcode 7 to build it.
+
 Open `Syncthing GUI.xcworkspace` and build. 
 
 **Do not use `Syncthing GUI.xcodeproj` for building** 
@@ -21,26 +23,42 @@ This project uses [Cocoapods](https://cocoapods.org) to manage librairies, but e
 1. **[Alamofire](https://github.com/Alamofire/Alamofire)** --- an HTTP networking library
 2. **[SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)** --- a JSON manipulation library
 
+## Status
+
+### Operational:
+
+* Syncthing communication system
+* Basic folder layout
+
+### Broken: 
+
+* The refresh button on the toolbar
+
+### WIP:
+
+* User defined preferences window
+* File list view
+* Periodic refresh (1 sec when front window)
+
 ## Programming
 
 Here I'll write the main ideas behind the structure of the code:
 
 * Syncthing objects are in the `SyncthingObject.swift` file. The documentation doesn't provide very accurate descriptions, so (almost) all objects are based on examples from the documentation.
-* The `RestApi.swift` file handles the REST interactions. It uses two main functions: a `GET` and a `POST` function to interact with Syncthing. They are called by functions that also provide a callback function. 
-* For ambiguous variables and functions, I use the following syntax so that Xcode knows how to document the Quick Help : 
+* The `RestApi.swift` file handles the REST interactions. It uses one main function that handles `GET` and `POST` requests to interact with Syncthing. They are called by functions that provide a callback function. 
+* For ambiguous classes, variables and functions, I use the following syntax so that Xcode knows how to document the Quick Help : 
 
 ```swift
 /** 
 Description 
 
-:param: parameter1 Description
-:returns: ReturnType Description
+-parameter parameter1: Description
+-returns returnType: Description
 */
 func name(parameter1: Type...) -> ReturnType { ... }
 ``` 
 
-* The `Printable` class provides the `var description: String` variable for use with log commands like `NSLog`, `print` and `println`.
-* I didn't do anything GUI-wise yet. Currently the app is only doing background stuff like REST calls.
+* The `CustomStringConvertible` class provides the `var description: String` variable for use with log commands like `NSLog` and `print`.
 
 ## License
 

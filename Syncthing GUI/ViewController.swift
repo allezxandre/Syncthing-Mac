@@ -53,23 +53,14 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
 - `RefreshRate`: Refresh rate, in seconds
 - `ResfreshRateBackground`: Refresh rate when the app is in background, in seconds
         */
-        let userPreferences = NSUserDefaults.standardUserDefaults()
-        userPreferences.registerDefaults(
-            ["Clients": [["Name": "Local Syncthing",
-                         "BaseURL": "http://localhost",
-                         "Port": 8080,
-                         "APIkey": ""]],
-            "RefreshRate": 1,
-            "RefreshRateBackground": 20])
+        //let userPreferences = NSUserDefaults.standardUserDefaults()
+        
             // Set up the table appearance
         folderTableView.hidden = true
         spinningWheel.hidden = false
         spinningWheel.startAnimation(nil)
             // Warm up the Syncthing Backend
         syncthingSystem.delegateForDisplay = self
-            // Set things up
-        let firstClient = (userPreferences.objectForKey("Clients"))![0]
-        print(firstClient)
         // syncthingSystem.baseUrlString = firstClient["IPaddress"]
         //syncthingSystem.port =
         // syncthingSystem.apiKey =
@@ -81,6 +72,12 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         didSet {
         // Update the view, if already loaded.
         }
+    }
+    
+    // MARK: NSUserDefaults
+    
+    func loadSettings(to syncthing: SyncthingCommunication) {
+        
     }
     
     // MARK: Delegate
