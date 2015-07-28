@@ -88,13 +88,22 @@ class SyncthingFolder: Equatable, CustomStringConvertible {
             return inSyncBytes! + outOfSyncBytes!
         }
     }
-    var syncPercentage: Double? {
+    var syncRatio: Double? {
         if (inSyncBytes == nil)||(folderSize == nil) {
             return nil
         } else {
-            return Double(inSyncBytes!)/Double(folderSize!) * Double(100)
+            return Double(inSyncBytes!)/Double(folderSize!)
         }
     }
+    
+    var syncPercentage: Double? {
+        if (syncRatio == nil) {
+            return nil
+        } else {
+            return syncRatio! * Double(100)
+        }
+    }
+    
     var description: String {
         return "\(id)  (\(path)) - Devices: \(devices)"
     }

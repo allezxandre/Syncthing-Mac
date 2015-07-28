@@ -142,6 +142,9 @@ extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
                 cell.folderProgressIndicator.stopAnimation(nil)
                 cell.folderProgressIndicator.indeterminate = false
                 cell.folderProgressIndicator.doubleValue = folder!.syncPercentage!
+                let formatter = NSNumberFormatter()
+                formatter.numberStyle = .PercentStyle
+                cell.progressPercentageTextField.stringValue = formatter.stringFromNumber(folder!.syncRatio!)!
             }
         }
             cell.delegateInteraction = self.syncthingSystem

@@ -30,7 +30,7 @@ class MainWindowController: NSWindowController {
                 "RefreshRateBackground": 20])
         // Get the client list
         let clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
-        
+        // Update the toolbar list
         remoteList.removeAllItems()
         for client in clients {
             let nameOfRemote: String = client["Name"] as! String
@@ -40,7 +40,7 @@ class MainWindowController: NSWindowController {
     
     @IBAction func remoteListButtonChange(sender: NSPopUpButton) {
         let newRemote = sender.titleOfSelectedItem!
-        print(newRemote)
+        print("User selected \(newRemote) as the syncthing system")
     }
 
 }

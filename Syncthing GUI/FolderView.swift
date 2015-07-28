@@ -18,6 +18,7 @@ class FolderView: NSTableCellView {
     @IBOutlet weak var folderName: NSTextField!
     @IBOutlet weak var folderPath: NSPathControl!
     @IBOutlet weak var folderProgressIndicator: NSProgressIndicator!
+    @IBOutlet weak var progressPercentageTextField: NSTextField!
     @IBOutlet weak var folderIdleImage: NSImageView!
     @IBOutlet weak var inSyncLabel: NSTextField!
     
@@ -35,6 +36,7 @@ class FolderView: NSTableCellView {
         didSet{
             folderIdleImage.hidden = !self.syncIdle
             inSyncLabel.hidden = !self.syncIdle
+            progressPercentageTextField.hidden = self.syncIdle
             folderProgressIndicator.hidden = self.syncIdle
             if self.syncIdle {
                 folderProgressIndicator.stopAnimation(nil)
