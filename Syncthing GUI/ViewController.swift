@@ -61,9 +61,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         spinningWheel.startAnimation(nil)
             // Warm up the Syncthing Backend
         syncthingSystem.delegateForDisplay = self
-        // syncthingSystem.baseUrlString = firstClient["IPaddress"]
-        //syncthingSystem.port =
-        // syncthingSystem.apiKey =
+        loadSettings(to: syncthingSystem, forClient: 0)
             // Ready
         syncthingSystem.fetchEverything()
     }
@@ -76,8 +74,12 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     
     // MARK: NSUserDefaults
     
-    func loadSettings(to syncthing: SyncthingCommunication) {
-        
+    func loadSettings(to syncthing: SyncthingCommunication, forClient index: Int) {
+        let userPreferences = NSUserDefaults.standardUserDefaults()
+        let client = (userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>])[index]
+        syncthing.baseUrlString = client["BaseURL"] as! String
+        syncthing.port = client["Port"] as! Int
+        syncthing.apiKey = client["APIkey"] as! String
     }
     
     // MARK: Delegate

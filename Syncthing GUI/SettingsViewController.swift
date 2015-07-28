@@ -39,12 +39,14 @@ class SettingsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        // Link with dataSource
         let dataSource = tableView.delegate() as! TableViewDataSource
         dataSource.settingsViewController = self
-        enableAll(false)
+        // Disable all UI elements
+        enableAll(!(tableView.selectedRow == -1))
     }
     
+    /** Handle a change in the TableView selection */
     func changedSelection() {
         let selectedClientIndex = tableView.selectedRow
         if selectedClientIndex == -1 {
@@ -55,16 +57,7 @@ class SettingsViewController: NSViewController {
         }
     }
     
-    func loadPanel(forClientName name: String) {
-        let clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
-        let client = findClient(withName: name, inArray: clients)
-        nameField.stringValue = name
-        addressTextField.stringValue = client["BaseURL"] as! String
-        portTextField.stringValue = String(client["Port"] as! Int)
-        apiKeyTextField.stringValue = client["APIkey"] as! String
-    }
-    
-    func loadPanel(forClientIndex index: Int) {
+    private func loadPanel(forClientIndex index: Int) {
         let clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
         let client = clients[index]
         nameField.stringValue = client["Name"] as! String
@@ -82,8 +75,8 @@ class SettingsViewController: NSViewController {
         return clients[0]
     }
     
-    /** Save settings from all fields */
-    func saveSettings() {
+    /** Save settings from all fields in the currently selected table row */
+    private func saveSettings() {
         let clientIndex = tableView.selectedRow
         assert(clientIndex != -1)
         var clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
@@ -99,7 +92,8 @@ class SettingsViewController: NSViewController {
         userPreferences.setObject(clients, forKey: "Clients")
     }
     
-    func enableAll(enable: Bool) {
+    /** Enable/disable all elements according to `enable` */
+    private func enableAll(enable: Bool) {
         nameField.enabled = enable
         addressTextField.enabled = enable
         portTextField.enabled = enable
