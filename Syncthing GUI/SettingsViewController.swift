@@ -27,6 +27,16 @@ class SettingsViewController: NSViewController {
     @IBAction func removeRemoteButtonPressed(sender: NSButton) {
     }
     
+    @IBAction func endEditingName(sender: NSTextField) {
+        saveSettings()
+    }
+    @IBAction func endEditingProperty(sender: NSTextField) {
+        saveSettings()
+    }
+    @IBAction func endEditingApiKey(sender: NSSecureTextField) {
+        saveSettings()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -70,6 +80,23 @@ class SettingsViewController: NSViewController {
             }
         }
         return clients[0]
+    }
+    
+    /** Save settings from all fields */
+    func saveSettings() {
+        let clientIndex = tableView.selectedRow
+        assert(clientIndex != -1)
+        var clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
+        clients[clientIndex]["Name"] = nameField.stringValue
+        clients[clientIndex]["BaseURL"] = addressTextField.stringValue
+        if let port = Int(portTextField.stringValue) {
+            clients[clientIndex]["Port"] = port
+        } else {
+            clients[clientIndex]["Port"] = 0
+            print("Port: \(Int(portTextField.stringValue))")
+        }
+        clients[clientIndex]["APIkey"] = apiKeyTextField.stringValue
+        userPreferences.setObject(clients, forKey: "Clients")
     }
     
     func enableAll(enable: Bool) {

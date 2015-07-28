@@ -868,6 +868,9 @@
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="endEditingProperty:" target="43S-rq-nd6" id="JBx-7X-KcE"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hcf-Vn-fId">
                                 <rect key="frame" x="277" y="182" width="59" height="17"/>
@@ -898,11 +901,17 @@
                                 </constraints>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="8080" drawsBackground="YES" id="5I5-th-4XK">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="dh5-oH-6Gu"/>
+                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" allowsFloats="NO" usesGroupingSeparator="NO" lenient="YES" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="v0d-2p-MTv">
+                                        <real key="minimum" value="0.0"/>
+                                        <real key="maximum" value="99999"/>
+                                    </numberFormatter>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="endEditingProperty:" target="43S-rq-nd6" id="3L3-F0-qYd"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pRU-3T-7gh">
                                 <rect key="frame" x="277" y="118" width="54" height="17"/>
@@ -928,6 +937,9 @@
                                         <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                     </allowedInputSourceLocales>
                                 </secureTextFieldCell>
+                                <connections>
+                                    <action selector="endEditingApiKey:" target="43S-rq-nd6" id="Vn0-P5-ebT"/>
+                                </connections>
                             </secureTextField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kcg-aq-Bvh">
                                 <rect key="frame" x="279" y="228" width="260" height="22"/>
@@ -940,6 +952,9 @@
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                 </textFieldCell>
+                                <connections>
+                                    <action selector="endEditingName:" target="43S-rq-nd6" id="HZw-Le-ECF"/>
+                                </connections>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SQn-a9-lyk" userLabel="Plus">
                                 <rect key="frame" x="239" y="9" width="20" height="22"/>
