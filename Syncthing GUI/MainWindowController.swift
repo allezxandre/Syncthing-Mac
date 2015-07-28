@@ -15,7 +15,6 @@ class MainWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
         loadRemoteListFromSettings()
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }
     
     func loadRemoteListFromSettings() {
@@ -36,11 +35,6 @@ class MainWindowController: NSWindowController {
             let nameOfRemote: String = client["Name"] as! String
             remoteList.addItemWithTitle(nameOfRemote)
         }
-    }
-    
-    @IBAction func remoteListButtonChange(sender: NSPopUpButton) {
-        let newRemote = sender.titleOfSelectedItem!
-        print("User selected \(newRemote) as the syncthing system")
     }
 
 }

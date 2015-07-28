@@ -718,9 +718,12 @@
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <action selector="remoteListButtonChange:" target="B8D-0N-5wS" id="eVK-uP-jjo"/>
+                                            <action selector="useNewSettingsForRemote:" target="Oky-zY-oP4" id="RpR-lM-Dbh"/>
                                         </connections>
                                     </popUpButton>
+                                    <connections>
+                                        <action selector="useNewSettingsForRemote:" target="Oky-zY-oP4" id="kHF-rD-Iwl"/>
+                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="xvp-IW-aWU"/>
                                 <toolbarItem implicitItemIdentifier="4CEE7CCA-C89A-452E-A47B-C2ACEDAB1668" label="Add" paletteLabel="Add Folder" image="NSAddTemplate" id="u3g-KP-rzl">
@@ -788,8 +791,8 @@
                                     <rect key="frame" x="1" y="1" width="238" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="9fJ-zb-z69">
-                                            <rect key="frame" x="0.0" y="0.0" width="238" height="208"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="9fJ-zb-z69">
+                                            <rect key="frame" x="0.0" y="0.0" width="238" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                             <size key="intercellSpacing" width="3" height="2"/>

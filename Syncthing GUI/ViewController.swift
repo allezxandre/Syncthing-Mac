@@ -26,7 +26,7 @@ The Main View controller from the main Window
 class ViewController: NSViewController, SyncthingDisplayDelegate {
     
     var syncthingSystem = SyncthingCommunication()
-    
+    var remoteListButton: NSPopUpButton!
     var delegateInteraction: SyncthingInteractionDelegate!
     
     // MARK: IBOutlets
@@ -36,6 +36,11 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     // MARK: IBActions
     @IBAction func refreshButtonPressed(sender: AnyObject) {
         print("button Pressed by \(sender)")
+        syncthingSystem.fetchEverything()
+    }
+    
+    @IBAction func useNewSettingsForRemote(sender: NSPopUpButton) {
+        loadSettings(to: syncthingSystem, forClient: sender.indexOfSelectedItem)
         syncthingSystem.fetchEverything()
     }
     
@@ -64,6 +69,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         loadSettings(to: syncthingSystem, forClient: 0)
             // Ready
         syncthingSystem.fetchEverything()
+        //remoteListButton.removeAllItems()
     }
 
     override var representedObject: AnyObject? {
@@ -79,7 +85,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         let client = (userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>])[index]
         syncthing.baseUrlString = client["BaseURL"] as! String
         syncthing.port = client["Port"] as! Int
-        syncthing.apiKey = client["APIkey"] as! String
+        syncthing.apiKey = client["APIkey"] as? String
     }
     
     // MARK: Delegate

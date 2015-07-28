@@ -22,13 +22,35 @@ class SettingsViewController: NSViewController {
     
     // MARK: IBActions
     @IBAction func addNewRemoteButton(sender: NSButton) {
+        var clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
+        clients += [[
+            "Name": "Default",
+            "BaseURL": "http://localhost",
+            "Port": 8080,
+            "APIkey": ""]]
+        userPreferences.setObject(clients, forKey: "Clients")
+        // Reload table
+        tableView.reloadData()
     }
     
     @IBAction func removeRemoteButtonPressed(sender: NSButton) {
+        let clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
+        var newClients = [Dictionary<String, AnyObject>]()
+        for (var i = 0; i<clients.count; i++) {
+            if (i != tableView.selectedRow) {
+                newClients += [clients[i]]
+            }
+        }
+        userPreferences.setObject(newClients, forKey: "Clients")
+        // Reload table
+        tableView.reloadData()
     }
     
     @IBAction func endEditingName(sender: NSTextField) {
         saveSettings()
+        // We also need to update the table row
+        let selectedIndex = NSIndexSet(index: tableView.selectedRow)
+        tableView.reloadDataForRowIndexes(selectedIndex, columnIndexes: NSIndexSet(index: 0))
     }
     @IBAction func endEditingProperty(sender: NSTextField) {
         saveSettings()
@@ -57,6 +79,7 @@ class SettingsViewController: NSViewController {
         }
     }
     
+    /** Load settings for the selected remote using data from NSUserDefaults */
     private func loadPanel(forClientIndex index: Int) {
         let clients = userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>]
         let client = clients[index]
