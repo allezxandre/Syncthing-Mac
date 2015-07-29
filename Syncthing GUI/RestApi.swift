@@ -20,7 +20,7 @@ protocol SyncthingInteractionDelegate {
 typealias AnswerHandler = (JSON) -> ()
 
 // As from Syncthing's wiki page: https://github.com/syncthing/syncthing/wiki/REST-Interface
-class SyncthingCommunication: SyncthingInteractionDelegate {
+class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
     // MARK: Delegate
     var delegateForDisplay: SyncthingDisplayDelegate!
     // MARK: Variables
@@ -39,30 +39,57 @@ class SyncthingCommunication: SyncthingInteractionDelegate {
     var syncthing: Syncthing = Syncthing()
         // Boolean variables
     /** Is true when the Syncthing server is answering Ping requests */
-    var systemIsOnline = true
+    var systemIsOnline: Bool {
+        didSet {
+            if systemIsOnline {
+                fetchEverything()
+                startTimers()
+            }
+        }
+    }
+    
+    var updateInterval: NSTimeInterval = NSTimeInterval(60)
     
     var gotConfig = false
     var gotSyncStatus = false
     var gotConnections = false
     var gotErrors = false
     var gotSystemStatus = false
-    /** Returns `true` if everything has been fetched */
+    /** Returns `true` if everything has been fetched at least once */
     var fetchedAll: Bool {
         return (gotConfig && gotSyncStatus && gotConnections && gotErrors && gotSystemStatus)
     }
     
-    // MARK: Basic class operations
+    override init() {
+        self.systemIsOnline = false
+    }
     
-    func changePort(to: Int) {
-        self.port = to
+    deinit {
+        print("Syncthing object for IPAddress '\(baseUrlString)' is being deinitialized")
     }
     
     // MARK: Getters
     
         // System Endpoints
+    func initiate() {
+        systemIsOnline = false
+        pingSyncthingServer()
+    }
+    
+    func startTimers() {
+        NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "periodicUpdate:", userInfo: nil, repeats: true)
+    }
+    
+    func periodicUpdate(timer: NSTimer) {
+        print("Timer interval: \(timer.timeInterval)")
+        getSystemStatus()
+        getSyncStatus()
+        getConnections()
+        getErrors()
+        delegateForDisplay.resetView(displayWheel: false)
+    }
     
     func fetchEverything() {
-        pingSyncthingServer()
         getSystemStatus()
         getConfig()
         getSyncStatus()

@@ -14,7 +14,6 @@
 		282C6E1D1B5DB11200CD6C04 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E1C1B5DB11200CD6C04 /* StatusViewController.swift */; };
 		282C6E1F1B5DB45C00CD6C04 /* FileTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282C6E1E1B5DB45C00CD6C04 /* FileTableCellView.swift */; };
 		28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB01B1CF70A0013476E /* SyncthingObjects.swift */; };
-		28416FB51B1D13670013476E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 28416FB41B1D13670013476E /* README.md */; };
 		289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601101B04F4B100F7B8C0 /* AppDelegate.swift */; };
 		289601131B04F4B100F7B8C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289601121B04F4B100F7B8C0 /* ViewController.swift */; };
 		289601151B04F4B100F7B8C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 289601141B04F4B100F7B8C0 /* Images.xcassets */; };
@@ -354,7 +353,6 @@
 				282C6E0B1B5D9DFD00CD6C04 /* MainWindowController.swift in Sources */,
 				28C068981B1F314E00D71DA2 /* FolderView.swift in Sources */,
 				289601111B04F4B100F7B8C0 /* AppDelegate.swift in Sources */,
-				28416FB51B1D13670013476E /* README.md in Sources */,
 				282C6E1B1B5DB10300CD6C04 /* FileViewController.swift in Sources */,
 				282C6E171B5DAE6E00CD6C04 /* FileView.swift in Sources */,
 				28416FB11B1CF70A0013476E /* SyncthingObjects.swift in Sources */,
@@ -482,10 +480,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/alexandrejouandin/Downloads/SwiftyJSON-master/build/Debug",
-				);
 				INFOPLIST_FILE = "Syncthing GUI/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -500,10 +494,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/alexandrejouandin/Downloads/SwiftyJSON-master/build/Debug",
-				);
 				INFOPLIST_FILE = "Syncthing GUI/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;

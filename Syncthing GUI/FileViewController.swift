@@ -45,7 +45,7 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
         }
 
     }
-    /*
+    
     func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
         if item == nil {
             return 0// (FileSystemItem.rootItem.numberOfChildren == nil) ? 0 : FileSystemItem.rootItem.numberOfChildren!
@@ -77,7 +77,7 @@ class FileOutlineDataSource: NSObject, NSOutlineViewDataSource {
             return object.relativePath
         }
     }
-    */
+    
 
 }
 

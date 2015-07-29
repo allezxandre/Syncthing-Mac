@@ -22,6 +22,13 @@ class StatusViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        
+        // TODO: FIX THIS
+        if let window: NSWindow = self.view.window {
+            window.styleMask = NSBorderlessWindowMask
+        } else {
+            print("WTF")
+        }
     }
     
 }

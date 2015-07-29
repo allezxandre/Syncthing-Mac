@@ -12,9 +12,12 @@ class MainWindowController: NSWindowController {
 
     @IBOutlet weak var remoteList: NSPopUpButton!
     
+    var mainViewController: ViewController!
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         loadRemoteListFromSettings()
+        mainViewController = self.window!.contentViewController! as! ViewController
     }
     
     func loadRemoteListFromSettings() {

@@ -18,6 +18,7 @@ import AppKit
 
 protocol SyncthingDisplayDelegate {
     func reloadData() -> ()
+    func resetView(displayWheel initializing: Bool) -> ()
 }
 
 /** 
@@ -26,7 +27,7 @@ The Main View controller from the main Window
 class ViewController: NSViewController, SyncthingDisplayDelegate {
     
     var syncthingSystem = SyncthingCommunication()
-    var remoteListButton: NSPopUpButton!
+    var parentWindowController: MainWindowController!
     var delegateInteraction: SyncthingInteractionDelegate!
     
     // MARK: IBOutlets
@@ -40,14 +41,16 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     }
     
     @IBAction func useNewSettingsForRemote(sender: NSPopUpButton) {
+        resetSyncthing()
         loadSettings(to: syncthingSystem, forClient: sender.indexOfSelectedItem)
-        syncthingSystem.fetchEverything()
+        resetView(displayWheel: true)
+        syncthingSystem.initiate()
     }
     
     // MARK: Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
-            // Load settings
+        //parentWindowController = self.view.window!.windowController as! MainWindowController
         
         /* // To reset settings on your machine, use this:
         let appDomain = NSBundle.mainBundle().bundleIdentifier!
@@ -68,8 +71,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         syncthingSystem.delegateForDisplay = self
         loadSettings(to: syncthingSystem, forClient: 0)
             // Ready
-        syncthingSystem.fetchEverything()
-        //remoteListButton.removeAllItems()
+        syncthingSystem.initiate()
     }
 
     override var representedObject: AnyObject? {
@@ -82,6 +84,16 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     
     func loadSettings(to syncthing: SyncthingCommunication, forClient index: Int) {
         let userPreferences = NSUserDefaults.standardUserDefaults()
+        // Register defaults so it doesn't crash on first launch
+        // I did this twice (in MainWindowController.swift too) because I can't
+        NSUserDefaults.standardUserDefaults().registerDefaults(
+            ["Clients": [["Name": "Local Syncthing",
+                "BaseURL": "http://localhost",
+                "Port": 8080,
+                "APIkey": ""]],
+                "RefreshRate": 1,
+                "RefreshRateBackground": 20])
+        syncthing.updateInterval = NSTimeInterval(userPreferences.integerForKey("RefreshRate"))
         let client = (userPreferences.objectForKey("Clients") as! [Dictionary<String, AnyObject>])[index]
         syncthing.baseUrlString = client["BaseURL"] as! String
         syncthing.port = client["Port"] as! Int
@@ -95,6 +107,22 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         spinningWheel.hidden = true
         folderTableView.hidden = false
         folderTableView.reloadData()
+    }
+    
+    func resetView(displayWheel initializing: Bool) -> () {
+        spinningWheel.hidden = !initializing
+        folderTableView.hidden = initializing
+        if initializing {
+            spinningWheel.startAnimation(nil)
+        } else {
+            spinningWheel.stopAnimation(nil)
+            folderTableView.reloadData()
+        }
+    }
+    
+    private func resetSyncthing() {
+        self.syncthingSystem = SyncthingCommunication()
+        syncthingSystem.delegateForDisplay = self
     }
     
     override func prepareForSegue(segue: NSStoryboardSegue, sender: AnyObject?) {

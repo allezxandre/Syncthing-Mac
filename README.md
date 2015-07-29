@@ -29,16 +29,19 @@ This project uses [Cocoapods](https://cocoapods.org) to manage librairies, but e
 
 * Syncthing communication system
 * Basic folder layout
+* Settings panel
+* Periodic refresh (1 sec when front window)
 
 ### Broken: 
 
 * The refresh button on the toolbar
+* Path representation for Remote syncthing servers
+* "Out of Sync" status (I just didn't implement it)
 
 ### WIP:
 
-* User defined preferences window
 * File list view
-* Periodic refresh (1 sec when front window)
+* Periodic refresh in background
 
 ## Programming
 
