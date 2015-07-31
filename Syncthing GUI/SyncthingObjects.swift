@@ -128,8 +128,8 @@ class File {
 
 /** An enumeration of [Syncthing events](http://docs.syncthing.net/dev/events.html#events) types */
 enum EventType {
-    case ConfigSaved, DeviceConnected, DeviceDisconnected, DeviceDiscovered, DeviceRejected, DownloadProgress, FolderCompletion, FolderErrors, FolderRejected, FolderSummary, ItemFinished, ItemStarted, LocalIndexUpdated, Ping, RemoteIndexUpdated, Starting, StartupCompleted, StateChanged
-    func getTypeFromString(string: String) -> EventType? {
+    case ConfigSaved, DeviceConnected, DeviceDisconnected, DeviceDiscovered, DeviceRejected, DownloadProgress, FolderCompletion, FolderErrors, FolderRejected, FolderSummary, ItemFinished, ItemStarted, LocalIndexUpdated, Ping, RemoteIndexUpdated, Starting, StartupCompleted, StateChanged, Dummy
+    static func getTypeFromString(string: String) -> EventType {
         switch string {
         case "ConfigSaved":
             return .ConfigSaved
@@ -168,7 +168,7 @@ enum EventType {
         case "StateChanged":
             return .StateChanged
         default:
-            return nil
+            return .Dummy
         }
     }
 }
@@ -177,12 +177,12 @@ class SyncthingEvent: CustomStringConvertible {
     var id: Int
     var time: NSDate
     let type: EventType
-    var data: [String: CustomStringConvertible]?
+    var data: [String: String]?
     var description: String {
         return "Event #\(id) - \(data)"
     }
     
-    init(id: Int, time: NSDate, type: EventType, data: [String: CustomStringConvertible]?) {
+    init(id: Int, time: NSDate, type: EventType, data: [String: String]?) {
         self.id = id
         self.time = time
         self.type = type

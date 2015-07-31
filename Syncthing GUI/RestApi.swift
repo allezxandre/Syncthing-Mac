@@ -54,6 +54,8 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
     
     // Events
     var lastEventId: Int = 0
+    /** The array of Syncthing events */
+    var events = [SyncthingEvent]()
     
     var gotConfig = false
     var gotSyncStatus = false
@@ -244,7 +246,50 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
     }
     
     private func handleEvents(response: JSON) {
-        
+        // Loop through events
+        for (_, eventJson): (String, JSON) in response {
+            // Create Event
+            let eventId: Int = eventJson["id"].intValue
+            let type = EventType.getTypeFromString(eventJson["type"].stringValue)
+            let time: NSDate = SyncthingCommunication.syncthingDateToNSDate(eventJson["time"].stringValue)
+            let data = SyncthingCommunication.jsonToStringArray(eventJson["data"])
+            
+            let event = SyncthingEvent(id: eventId, time: time, type: type, data: data)
+            // Update self
+            self.lastEventId = eventId
+            self.events += [event]
+        }
+    }
+    
+    // MARK: Misc.
+    
+    /** Convert a date from the format Syncthing uses to NSDate */
+    class func syncthingDateToNSDate(syncthingDate: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        var result = NSDate()
+        // As from Wikipedia:
+        // http://en.wikipedia.org/wiki/ISO_8601
+        // http://fr.wikipedia.org/wiki/ISO_8601
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSSzzzzzz"
+        if let date = dateFormatter.dateFromString(syncthingDate) {
+            result = date
+        } else {
+            NSLog("Error formatting date string: '\(syncthingDate)'")
+        }
+        return result
+    }
+    
+    /** Convert a JSON (String: String) dictionnary to a Swift `[String: String]` dictionnary */
+    class func jsonToStringArray(json: JSON) -> [String: String]? {
+        var result = [String: String]()
+        for (key, stringJson): (String, JSON) in json {
+            if let stringValue = stringJson.string {
+                result += [key: stringValue]
+            } else {
+                NSLog("There was an error converting this JSON: ==={ \(stringJson) }=== to a string")
+            }
+        }
+        return (result.count > 0) ? result : nil
     }
     
     // MARK: Alamofire's HTTP
