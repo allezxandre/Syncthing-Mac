@@ -121,6 +121,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
     }
     
     private func resetSyncthing() {
+        self.syncthingSystem.stopTimers()
         self.syncthingSystem = SyncthingCommunication()
         syncthingSystem.delegateForDisplay = self
     }

@@ -47,6 +47,7 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
             }
         }
     }
+    var timer: NSTimer? = nil
     
     var updateInterval: NSTimeInterval = NSTimeInterval(60)
     
@@ -77,7 +78,13 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
     }
     
     func startTimers() {
-        NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "periodicUpdate:", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "periodicUpdate:", userInfo: nil, repeats: true)
+    }
+    
+    func stopTimers() {
+        if timer != nil {
+            timer!.invalidate()
+        }
     }
     
     func periodicUpdate(timer: NSTimer) {
