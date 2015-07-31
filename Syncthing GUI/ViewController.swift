@@ -61,7 +61,6 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
 - `RefreshRate`: Refresh rate, in seconds
 - `ResfreshRateBackground`: Refresh rate when the app is in background, in seconds
         */
-        //let userPreferences = NSUserDefaults.standardUserDefaults()
         
             // Set up the table appearance
         folderTableView.hidden = true
@@ -106,7 +105,13 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
         spinningWheel.stopAnimation(nil)
         spinningWheel.hidden = true
         folderTableView.hidden = false
+        reloadTable()
+    }
+    
+    func reloadTable() {
+        let selectedRow: Int = folderTableView.selectedRow
         folderTableView.reloadData()
+        folderTableView.selectRowIndexes(NSIndexSet(index: selectedRow), byExtendingSelection: false)
     }
     
     func resetView(displayWheel initializing: Bool) -> () {
@@ -116,7 +121,7 @@ class ViewController: NSViewController, SyncthingDisplayDelegate {
             spinningWheel.startAnimation(nil)
         } else {
             spinningWheel.stopAnimation(nil)
-            folderTableView.reloadData()
+            reloadTable()
         }
     }
     
@@ -184,7 +189,7 @@ extension ViewController: NSTableViewDataSource, NSTableViewDelegate {
                 cell.progressPercentageTextField.stringValue = formatter.stringFromNumber(folder!.syncRatio!)!
             }
         }
-            cell.delegateInteraction = self.syncthingSystem
+        cell.delegateInteraction = self.syncthingSystem
         
         return cell
     }
