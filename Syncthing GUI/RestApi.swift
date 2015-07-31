@@ -47,9 +47,13 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
             }
         }
     }
-    var timer: NSTimer? = nil
     
+    // timer
+    var timer: NSTimer? = nil
     var updateInterval: NSTimeInterval = NSTimeInterval(60)
+    
+    // Events
+    var lastEventId: Int = 0
     
     var gotConfig = false
     var gotSyncStatus = false
@@ -89,10 +93,10 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
     
     func periodicUpdate(timer: NSTimer) {
         print("Timer interval: \(timer.timeInterval)")
-        getSystemStatus()
         getSyncStatus()
         getConnections()
         getErrors()
+        // Update display
         delegateForDisplay.resetView(displayWheel: false)
     }
     
@@ -161,7 +165,6 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
             self.gotSystemStatus = true
         })
     }
-    
         // Database Endpoints
     /**
     Browse the file database according to [Syncthing's documentation](http://docs.syncthing.net/rest/db-browse-get.html).
@@ -185,6 +188,16 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
         httpRequest(.GET, urlPath:"/rest/db/status", parameters: ["folder": folder], returnFunction: handleFolderStatus(folder))
     }
     
+    // MARK: Event API Handler
+    
+    func getEvents(limit: Int? = nil) {
+        var parameters = ["since": String(self.lastEventId)]
+        if limit != nil {
+            parameters += ["limit": String(limit!)]
+        }
+        httpRequest(.GET, urlPath: "/rest/events", parameters: parameters, body: nil, returnFunction: handleEvents)
+    }
+    
     // MARK: POSTERS
         // Database Endpoints
     
@@ -205,7 +218,7 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
     }
     
     private func handleFolderStatus(folderString: String)(reponse: JSON) -> () {
-        print("handleFolderStatus(\(folderString))(\(reponse))")
+        // print("handleFolderStatus(\(folderString))(\(reponse))")
         syncthing.foldersInSync[folderString]?.idle = (reponse["state"].stringValue == "idle")
         syncthing.foldersInSync[folderString]?.inSyncBytes = reponse["inSyncBytes"].intValue
         syncthing.foldersInSync[folderString]?.outOfSyncBytes = reponse["needBytes"].intValue
@@ -228,6 +241,10 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
         }
         gotConfig = true
         return
+    }
+    
+    private func handleEvents(response: JSON) {
+        
     }
     
     // MARK: Alamofire's HTTP
@@ -282,9 +299,14 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
         Alamofire.request(urlRequest)
             .responseJSON { (req, res, json, error) in
                 if(error != nil) {
-                    print(req)
-                    print(res)
-                    print("Error retrieving JSON: \n\(error!)")
+                    print("\n========= ERROR =========\nError retrieving JSON:\n")
+                    if let request = req {
+                        print("Request:  \(request)\n")
+                    }
+                    if let response = res {
+                        print("Response: \(response)\n")
+                    }
+                    print("Error: \(error!)\n=========================\n")
                 } else {
                     print("Received data from \(urlPath)")
                     if returnFunction != nil {
@@ -292,7 +314,6 @@ class SyncthingCommunication: NSObject, SyncthingInteractionDelegate {
                         returnFunction!(resultat)
                         // Display our Syncthing object for debugging purposes
                         if self.fetchedAll {
-                            print(self.syncthing)
                             self.delegateForDisplay.reloadData()
                         }
                         return

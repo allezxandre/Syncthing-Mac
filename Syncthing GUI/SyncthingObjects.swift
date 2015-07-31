@@ -126,6 +126,70 @@ class File {
     }
 }
 
+/** An enumeration of [Syncthing events](http://docs.syncthing.net/dev/events.html#events) types */
+enum EventType {
+    case ConfigSaved, DeviceConnected, DeviceDisconnected, DeviceDiscovered, DeviceRejected, DownloadProgress, FolderCompletion, FolderErrors, FolderRejected, FolderSummary, ItemFinished, ItemStarted, LocalIndexUpdated, Ping, RemoteIndexUpdated, Starting, StartupCompleted, StateChanged
+    func getTypeFromString(string: String) -> EventType? {
+        switch string {
+        case "ConfigSaved":
+            return .ConfigSaved
+        case "DeviceConnected":
+            return .DeviceConnected
+        case "DeviceDisconnected":
+            return .DeviceDisconnected
+        case "DeviceDiscovered":
+            return .DeviceDiscovered
+        case "DeviceRejected":
+            return .DeviceRejected
+        case "DownloadProgress":
+            return .DownloadProgress
+        case "FolderCompletion":
+            return .FolderCompletion
+        case "FolderErrors":
+            return .FolderErrors
+        case "FolderRejected":
+            return .FolderRejected
+        case "FolderSummary":
+            return .FolderSummary
+        case "ItemFinished":
+            return .ItemFinished
+        case "ItemStarted":
+            return .ItemStarted
+        case "LocalIndexUpdated":
+            return .LocalIndexUpdated
+        case "Ping":
+            return .Ping
+        case "RemoteIndexUpdated":
+            return .RemoteIndexUpdated
+        case "Starting":
+            return .Starting
+        case "StartupCompleted":
+            return .StartupCompleted
+        case "StateChanged":
+            return .StateChanged
+        default:
+            return nil
+        }
+    }
+}
+
+class SyncthingEvent: CustomStringConvertible {
+    var id: Int
+    var time: NSDate
+    let type: EventType
+    var data: [String: CustomStringConvertible]?
+    var description: String {
+        return "Event #\(id) - \(data)"
+    }
+    
+    init(id: Int, time: NSDate, type: EventType, data: [String: CustomStringConvertible]?) {
+        self.id = id
+        self.time = time
+        self.type = type
+        self.data = data
+    }
+}
+
 // MARK: Equatable global functions
 
 
